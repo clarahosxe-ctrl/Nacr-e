@@ -1,0 +1,1022 @@
+<!doctype html><html><head><meta charset=utf-8><meta name="theme-color" content="#F2F1F6" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#13111C" media="(prefers-color-scheme: dark)"><meta name="description" content="Ton placard beauté, ta routine et tes looks."><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icons/icon-192.png"><link rel="apple-touch-icon" href="icons/apple-touch-icon.png"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Beauty Corner"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>My Beauty Corner</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;700&display=swap">
+<style>
+/* Layout: one column app, bottom tab bar, bottom-sheet editors. Skincare = iris, makeup = rose. Dates and PAO in mono like a pack label. */
+:root{
+  --bg:#F2F1F6; --surface:#FFFFFF; --surface-2:#E9E7F1; --ink:#1D1A2B; --muted:#625E78; --line:#DAD7E6;
+  --iris:#4A3FCF; --iris-ink:#FFFFFF; --iris-soft:#E6E3FB;
+  --rose:#B8325F; --rose-ink:#FFFFFF; --rose-soft:#F8E1E9;
+  --ok:#1F7A55; --ok-soft:#DDF1E8; --warn:#8F5A08; --warn-soft:#F7EAD0; --bad:#B3321F; --bad-soft:#F8DEDA;
+  --shadow:0 1px 2px rgba(29,26,43,.06),0 10px 24px -14px rgba(29,26,43,.25);
+  --scrim:rgba(14,11,28,.55);
+  --sel:var(--iris); --sel-soft:var(--iris-soft); --sel-ink:var(--iris-ink);
+  --f-display:'Bricolage Grotesque','Avenir Next','Segoe UI',system-ui,sans-serif;
+  --f-body:'DM Sans','Segoe UI',system-ui,sans-serif;
+  --f-mono:'DM Mono',ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#13111C; --surface:#1C1929; --surface-2:#272336; --ink:#EEEBFA; --muted:#A5A0BC; --line:#332F47;
+    --iris:#A59CFF; --iris-ink:#14102E; --iris-soft:#2A2554;
+    --rose:#F08CAE; --rose-ink:#2B0E19; --rose-soft:#43202F;
+    --ok:#5FD0A0; --ok-soft:#173528; --warn:#E8B558; --warn-soft:#3B2D12; --bad:#F2796A; --bad-soft:#40201C;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 24px -14px rgba(0,0,0,.6);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#13111C; --surface:#1C1929; --surface-2:#272336; --ink:#EEEBFA; --muted:#A5A0BC; --line:#332F47;
+  --iris:#A59CFF; --iris-ink:#14102E; --iris-soft:#2A2554;
+  --rose:#F08CAE; --rose-ink:#2B0E19; --rose-soft:#43202F;
+  --ok:#5FD0A0; --ok-soft:#173528; --warn:#E8B558; --warn-soft:#3B2D12; --bad:#F2796A; --bad-soft:#40201C;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 24px -14px rgba(0,0,0,.6);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  background:var(--bg);color:var(--ink);font:400 15px/1.5 var(--f-body);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-block:8px calc(92px + env(safe-area-inset-bottom,0px));
+}
+.wrap{max-width:720px;margin:0 auto}
+.mk{--sel:var(--rose);--sel-soft:var(--rose-soft);--sel-ink:var(--rose-ink)}
+h1,h2,h3{font-family:var(--f-display);margin:0;letter-spacing:-.015em;text-wrap:balance}
+h2{font-size:24px;line-height:1.15;font-weight:800}
+h3{font-size:16px;font-weight:700}
+p{margin:0}
+.muted,.sub{color:var(--muted)}
+.sub{font-size:13px}
+.mono{font-family:var(--f-mono)}
+.eyebrow{font:500 11.5px var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.stack{display:grid;gap:16px}
+.gap-s{display:grid;gap:8px}
+.row-flex{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+:focus-visible{outline:2px solid var(--sel);outline-offset:2px}
+
+/* header */
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 0 14px}
+.brand{display:flex;align-items:center;gap:10px;min-width:0}
+.brand h1{font-size:21px;font-weight:800;line-height:1.1}
+.logo{width:34px;height:34px;border-radius:50%;background:var(--iris);color:var(--iris-ink);display:grid;place-items:center;flex:none}
+.store{font:500 11.5px var(--f-mono);color:var(--muted);display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.store::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--ok)}
+.store.local::before{background:var(--warn)} .store.memory::before{background:var(--bad)}
+
+/* controls */
+.btn{font:700 14.5px var(--f-body);border-radius:12px;min-height:46px;padding:0 18px;border:1px solid transparent;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;text-align:center}
+.btn.primary{background:var(--sel);color:var(--sel-ink)}
+.btn.ghost{background:transparent;border-color:var(--line);color:var(--ink)}
+.btn.danger{background:transparent;border-color:var(--bad);color:var(--bad)}
+.btn.sm{min-height:36px;padding:0 12px;font-size:13px;border-radius:10px}
+.btn.block{width:100%}
+.btn:disabled{opacity:.5;cursor:default}
+.icon-btn{width:40px;height:40px;border-radius:50%;border:0;background:var(--surface-2);color:var(--ink);display:grid;place-items:center;cursor:pointer;flex:none}
+.seg{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:2px;background:var(--surface-2);padding:3px;border-radius:12px}
+.seg button{border:0;background:transparent;color:var(--muted);font:700 13.5px var(--f-body);padding:8px 6px;border-radius:9px;min-height:40px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:var(--shadow)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1px solid var(--line);background:var(--surface);color:var(--ink);font:500 13.5px var(--f-body);padding:7px 12px;border-radius:999px;min-height:38px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--sel-soft);border-color:var(--sel);color:var(--sel);font-weight:700}
+.field{display:grid;gap:6px;min-width:0}
+.field>label,.lbl{font:700 12.5px var(--f-body);color:var(--muted);letter-spacing:.02em}
+input[type=text],input[type=date],input[type=number],select,textarea{width:100%;font:400 15px var(--f-body);color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 12px;min-height:44px}
+input[type=color]{width:56px;height:44px;padding:2px;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+textarea{min-height:84px;resize:vertical}
+::placeholder{color:var(--muted);opacity:.8}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:380px){.two{grid-template-columns:1fr}}
+
+/* panels and lists */
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;display:grid;gap:14px;min-width:0}
+.panel.flat{background:transparent;border-style:dashed}
+.list{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.row{display:grid;grid-template-columns:40px minmax(0,1fr) auto;gap:12px;align-items:center;padding:12px 14px;width:100%;text-align:left;background:transparent;border:0;border-top:1px solid var(--line);color:inherit;font:inherit;cursor:pointer;min-height:64px}
+.list>.row:first-child,.list>div:first-child>.row:first-child{border-top:0}
+.row .nm{font-weight:700;overflow-wrap:anywhere}
+.row .meta{display:flex;flex-wrap:wrap;gap:4px 10px;align-items:center;color:var(--muted);font-size:13px;margin-top:2px}
+.tile{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:var(--iris-soft);color:var(--iris)}
+.tile.mk{background:var(--rose-soft);color:var(--rose)}
+.sw{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);box-shadow:inset 0 0 0 3px var(--surface)}
+.st{font:500 12px var(--f-mono);padding:4px 9px;border-radius:999px;white-space:nowrap;display:inline-flex;align-items:center;gap:6px}
+.st::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.st.ok{color:var(--ok);background:var(--ok-soft)} .st.soon{color:var(--warn);background:var(--warn-soft)} .st.bad{color:var(--bad);background:var(--bad-soft)}
+.st.none,.st.done{color:var(--muted);background:var(--surface-2)}
+.pao{display:inline-flex;align-items:center;gap:4px;font:500 11.5px var(--f-mono);color:var(--muted)}
+.list-h{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin:2px 2px 8px}
+.empty{text-align:center;padding:28px 18px;border:1px dashed var(--line);border-radius:14px;display:grid;gap:12px;justify-items:center}
+.empty p{max-width:36ch}
+.note{border-radius:12px;padding:12px 14px;background:var(--warn-soft);color:var(--ink);border:1px solid var(--warn);font-size:14px}
+.note.info{background:var(--surface-2);border-color:var(--line)}
+.note.bad{background:var(--bad-soft);border-color:var(--bad)}
+.note.ok{background:var(--ok-soft);border-color:var(--ok)}
+
+/* steps */
+.step{display:grid;grid-template-columns:30px minmax(0,1fr);gap:12px;padding:12px 0;border-top:1px solid var(--line)}
+.step:first-child{border-top:0}
+.idx{width:28px;height:28px;border-radius:50%;background:var(--sel-soft);color:var(--sel);display:grid;place-items:center;font:500 12px var(--f-mono)}
+.ck{width:28px;height:28px;border-radius:50%;border:2px solid var(--line);background:transparent;display:grid;place-items:center;cursor:pointer;color:transparent;padding:0}
+.ck[aria-pressed="true"]{background:var(--ok);border-color:var(--ok);color:var(--surface)}
+.sb{min-width:0;display:grid;gap:4px}
+.st-h{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center}
+.pchip{border:1px solid var(--line);background:var(--surface-2);color:var(--ink);border-radius:999px;padding:4px 10px;font:500 13px var(--f-body);cursor:pointer;text-align:left}
+.miss{border:1px dashed var(--warn);color:var(--warn);border-radius:999px;padding:3px 10px;font:500 12.5px var(--f-body)}
+.why{font-size:13px;color:var(--muted);font-style:normal}
+.need{border:1px solid var(--line);border-radius:12px;padding:12px;display:grid;gap:6px;background:var(--surface)}
+.need-h{display:flex;justify-content:space-between;gap:10px;align-items:baseline}
+.budget{font:500 12px var(--f-mono);color:var(--muted)}
+.crit{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 10px;padding:10px 0;border-top:1px solid var(--line)}
+.crit:first-child{border-top:0}
+.crit p{grid-column:1/-1;font-size:13.5px;color:var(--muted)}
+.kv{display:flex;justify-content:space-between;gap:10px;align-items:baseline}
+
+/* photos and looks */
+.slots{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px}
+.slot{position:relative;aspect-ratio:3/4;max-width:100%;border:1.5px dashed var(--line);border-radius:12px;background:var(--surface);display:grid;place-items:center;align-content:center;gap:6px;color:var(--muted);font-size:12.5px;text-align:center;cursor:pointer;overflow:hidden;padding:8px}
+.slot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.slot .cap{position:absolute;left:0;right:0;bottom:0;background:linear-gradient(transparent,rgba(0,0,0,.65));color:#fff;padding:18px 8px 6px;font-size:12px;font-weight:700}
+.slot .rm{position:absolute;top:6px;right:6px;width:30px;height:30px;border-radius:50%;border:0;background:rgba(0,0,0,.55);color:#fff;display:grid;place-items:center;cursor:pointer;padding:0}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.look{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;text-align:left;padding:0;cursor:pointer;color:inherit;font:inherit;min-width:0}
+.look img{display:block;width:100%;max-width:100%;aspect-ratio:3/4;object-fit:cover}
+.look .lb{padding:10px 12px;display:grid;gap:6px}
+.bar{height:6px;background:var(--surface-2);border-radius:99px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--sel)}
+.busy{display:flex;gap:12px;align-items:center;padding:14px;border:1px dashed var(--line);border-radius:12px;background:var(--surface)}
+.spin{width:20px;height:20px;border:2px solid var(--line);border-top-color:var(--sel);border-radius:50%;animation:sp .9s linear infinite;flex:none}
+@keyframes sp{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* nav, sheet, toast */
+.tabs{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--surface);border-top:1px solid var(--line);
+  padding:6px max(8px,env(safe-area-inset-right,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(8px,env(safe-area-inset-left,0px))}
+.tabs-in{max-width:720px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr);gap:2px}
+.tab{border:0;background:transparent;color:var(--muted);display:grid;justify-items:center;gap:2px;padding:6px 2px;font:700 11px var(--f-body);border-radius:10px;cursor:pointer;min-height:52px}
+.tab[aria-current="page"]{color:var(--iris)}
+.tab[aria-current="page"] svg{stroke-width:2.3}
+.overlay{position:fixed;inset:0;z-index:40;background:var(--scrim);display:flex;align-items:flex-end;justify-content:center}
+.sheet{background:var(--bg);width:min(580px,100%);max-height:92dvh;max-height:92vh;overflow-y:auto;border-radius:20px 20px 0 0;
+  padding:16px max(16px,env(safe-area-inset-right,0px)) calc(20px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));display:grid;gap:16px;align-content:start}
+@media (min-width:640px){.overlay{align-items:center}.sheet{border-radius:20px;max-height:88vh}}
+.sheet-h{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(78px + env(safe-area-inset-bottom,0px));z-index:60;background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:999px;font-size:14px;font-weight:500;max-width:min(92vw,460px);text-align:center;box-shadow:var(--shadow)}
+.toast[hidden]{display:none}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <span class="logo" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="8"/><path d="M8 9.5a4.5 4.5 0 013-2.2"/></svg></span>
+      <h1>My Beauty Corner</h1>
+    </div>
+    <span id="store" class="store" aria-live="polite">Chargement</span>
+  </header>
+  <main id="view"></main>
+</div>
+<nav class="tabs" aria-label="Navigation principale"><div class="tabs-in" id="tabs"></div></nav>
+<div id="sheet"></div>
+<div id="toast" class="toast" role="status" hidden></div>
+
+<script>
+(()=>{
+'use strict';
+const $=(s,r=document)=>r.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const uid8=()=>'x'+Date.now().toString(36)+Math.random().toString(36).slice(2,7);
+const clone=o=>JSON.parse(JSON.stringify(o));
+const A=x=>Array.isArray(x)?x:[];
+const T=v=>typeof v==='string'?v:'';
+const norm=s=>String(s||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
+const iso=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+const todayStr=()=>iso(new Date());
+const parseISO=s=>{if(!s)return null;const [y,m,d]=String(s).split('-').map(Number);if(!y||!m||!d)return null;return new Date(y,m-1,d)};
+const startToday=()=>{const d=new Date();d.setHours(0,0,0,0);return d};
+const fmtDate=d=>d.toLocaleDateString('fr-FR',{day:'numeric',month:'short',year:'numeric'});
+const addMonths=(d,m)=>{const r=new Date(d);const day=r.getDate();r.setMonth(r.getMonth()+m);if(r.getDate()!==day)r.setDate(0);return r};
+const daysAgoStr=n=>{const d=startToday();d.setDate(d.getDate()-n);return iso(d)};
+const daysAheadStr=n=>daysAgoStr(-n);
+
+/* ---------- reference data ---------- */
+const SKIN_CATS=["Démaquillant","Nettoyant","Exfoliant","Tonique","Sérum","Contour des yeux","Hydratant","SPF","Masque","Soin ciblé","Soin lèvres","Autre soin"];
+const MK_CATS=["Primer","Fond de teint","Correcteur","Poudre","Blush","Bronzer","Highlighter","Sourcils","Ombre à paupières","Eye-liner","Mascara","Rouge à lèvres","Gloss ou baume teinté","Fixateur","Pinceaux et outils","Autre maquillage"];
+const PAO_DEF={"Démaquillant":12,"Nettoyant":12,"Exfoliant":12,"Tonique":12,"Sérum":6,"Contour des yeux":12,"Hydratant":12,"SPF":6,"Masque":12,"Soin ciblé":6,"Soin lèvres":12,"Autre soin":12,"Primer":12,"Fond de teint":12,"Correcteur":12,"Poudre":24,"Blush":24,"Bronzer":24,"Highlighter":24,"Sourcils":12,"Ombre à paupières":24,"Eye-liner":6,"Mascara":3,"Rouge à lèvres":24,"Gloss ou baume teinté":12,"Fixateur":12,"Autre maquillage":12};
+const ACTIVES=["Rétinol","Niacinamide","Vitamine C","AHA","BHA","PHA","Acide hyaluronique","Céramides","Peptides","Acide azélaïque","Panthénol","Centella","Zinc","Squalane","Parfum","Alcool"];
+const FINISH=["","Mat","Satiné","Lumineux","Crémeux","Irisé"];
+const SLOTS=[{k:"face",label:"Face"},{k:"gauche",label:"Profil gauche"},{k:"droite",label:"Profil droit"},{k:"zoomA",label:"Front et joues"},{k:"zoomB",label:"Zone à problème"}];
+
+const IC={
+  sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
+  jar:'<rect x="5" y="9" width="14" height="11" rx="3"/><path d="M6.5 9V6.5a1 1 0 011-1h9a1 1 0 011 1V9M5 14h14"/>',
+  drop:'<path d="M12 3s6 6.2 6 10.5A6 6 0 016 13.5C6 9.2 12 3 12 3z"/>',
+  lip:'<rect x="8" y="14" width="8" height="7" rx="1"/><rect x="9.5" y="9" width="5" height="5"/><path d="M9.5 9L11 3l3.5 2.5V9"/>',
+  bag:'<path d="M6 8h12l-1 12H7L6 8z"/><path d="M9 8a3 3 0 016 0"/>',
+  plus:'<path d="M12 5v14M5 12h14"/>', x:'<path d="M6 6l12 12M18 6L6 18"/>', check:'<path d="M5 12.5l4.5 4.5L19 7.5"/>',
+  spark:'<path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/>',
+  cam:'<path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/>'
+};
+const ic=(n,s=20)=>'<svg width="'+s+'" height="'+s+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+IC[n]+'</svg>';
+const paoJar=m=>'<span class="pao" title="Période après ouverture"><svg width="18" height="16" viewBox="0 0 24 22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 9h14v9a3 3 0 01-3 3H8a3 3 0 01-3-3z"/><path d="M4 5.5L18 2.5"/></svg>'+m+'M</span>';
+
+/* ---------- state ---------- */
+const KEY='mybeautycorner:v1';
+const blank=()=>({
+  skin:{type:'',sensi:'',concerns:[],feel:[],feelText:'',goals:'',avoid:'',steps:'Équilibrée'},
+  mk:{freq:'',time:'',rendu:[],coverage:'',tone:'',occasions:[],constraints:''},
+  analysis:null,history:[],routine:null,mkPlan:null,done:{date:'',ids:[]},
+  products:[],looks:[],wish:[]
+});
+let S=blank();
+const ui={tab:'today',skinTab:'profil',mkTab:'profil',when:new Date().getHours()<15?'matin':'soir',filter:{type:'all',q:'',sort:'expiry',flag:''},busy:null};
+let ready=false,sheet=null,ctl=null;
+const AI={sample:null,images:null};
+const photos={},lookBlobs={};
+
+function merge(d){
+  if(!d||typeof d!=='object')return;
+  for(const k of Object.keys(S)){
+    if(d[k]===undefined)continue;
+    if(S[k]&&typeof S[k]==='object'&&!Array.isArray(S[k])&&d[k]&&typeof d[k]==='object')Object.assign(S[k],d[k]);
+    else S[k]=d[k];
+  }
+}
+const mainPayload=()=>({skin:S.skin,mk:S.mk,analysis:S.analysis,history:S.history,routine:S.routine,mkPlan:S.mkPlan,done:S.done});
+const cap=async n=>{try{return (await window.claude?.use?.(n))||null}catch{return null}};
+
+const Store={
+  mode:'memory',base:null,chain:Promise.resolve(),tm:null,tl:null,lastErr:0,
+  async init(){
+    const user=await cap('user');let id=null;
+    try{id=user?await user.id():null}catch{}
+    const db=await cap('db');
+    if(db&&id){
+      try{
+        const base=db.doc('data/users/'+id+'/main');
+        const m=await base.get();
+        if(m.exists)merge(clone(m.data()));
+        const [p,l,w]=await Promise.all([base.collection('products').get(),base.collection('looks').get(),base.collection('wish').get()]);
+        S.products=p.docs.map(d=>({...clone(d.data()),id:d.id}));
+        S.looks=l.docs.map(d=>({...clone(d.data()),id:d.id}));
+        S.wish=w.docs.map(d=>({...clone(d.data()),id:d.id}));
+        this.base=base;this.mode='db';return;
+      }catch(e){console.warn('db',e)}
+    }
+    try{const raw=localStorage.getItem(KEY);if(raw)merge(JSON.parse(raw));this.mode='local'}catch{this.mode='memory'}
+  },
+  q(fn){this.chain=this.chain.then(fn).catch(e=>this.fail(e))},
+  fail(e){
+    console.warn(e);
+    if(Date.now()-this.lastErr<4000)return;this.lastErr=Date.now();
+    toast(e&&e.code==='quota_exceeded'?"Espace de sauvegarde plein : supprime des looks ou des produits.":"Sauvegarde impossible pour le moment.");
+  },
+  saveMain(){
+    if(this.mode==='db'){clearTimeout(this.tm);this.tm=setTimeout(()=>this.q(()=>this.base.set(clone(mainPayload()))),500)}
+    else this.saveLocal();
+  },
+  saveItem(col,it){if(this.mode==='db')this.q(()=>this.base.collection(col).doc(it.id).set(clone(it)));else this.saveLocal()},
+  delItem(col,id){if(this.mode==='db')this.q(()=>this.base.collection(col).doc(id).delete());else this.saveLocal()},
+  saveLocal(){
+    if(this.mode==='memory')return;
+    clearTimeout(this.tl);
+    this.tl=setTimeout(()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch{this.fail()}},300);
+  }
+};
+
+/* ---------- product logic ---------- */
+const prod=id=>S.products.find(p=>p.id===id)||null;
+function expiryDate(p){
+  const c=[];const e=parseISO(p.expiry);if(e)c.push(e.getTime());
+  const o=parseISO(p.opened);if(o&&Number(p.pao)>0)c.push(addMonths(o,Number(p.pao)).getTime());
+  return c.length?new Date(Math.min(...c)):null;
+}
+function daysLeft(p){const e=expiryDate(p);return e?Math.round((e-startToday())/864e5):null}
+function status(p){
+  if(p.finished)return 'done';
+  const d=daysLeft(p);
+  if(d===null)return 'none';if(d<0)return 'bad';if(d<=30)return 'soon';return 'ok';
+}
+function badge(p){
+  const s=status(p),d=daysLeft(p);
+  const t=s==='done'?'Terminé':s==='none'?'Sans date':s==='bad'?'Expiré '+(-d)+' j':d>=60?Math.round(d/30)+' mois':'J-'+d;
+  return '<span class="st '+s+'">'+t+'</span>';
+}
+const byDays=(a,b)=>(daysLeft(a)??99999)-(daysLeft(b)??99999);
+const catsOf=t=>t==='makeup'?MK_CATS:SKIN_CATS;
+function tile(p){
+  if(p.color)return '<span class="sw" style="background:'+esc(p.color)+'"></span>';
+  return '<span class="tile '+(p.type==='makeup'?'mk':'')+'">'+ic(p.type==='makeup'?'lip':'drop')+'</span>';
+}
+function rowHTML(p){
+  const exp=expiryDate(p);
+  const bits=[];
+  if(p.brand)bits.push(esc(p.brand));
+  bits.push(esc(p.cat));
+  if(p.shade)bits.push(esc(p.shade));
+  if(p.finish)bits.push(esc(p.finish));
+  const dateTxt=exp?'<span class="mono">'+fmtDate(exp)+'</span>':'';
+  return '<button class="row" data-act="open-product" data-id="'+p.id+'">'+tile(p)+
+    '<div style="min-width:0"><div class="nm">'+esc(p.name)+(p.demo?' <span class="st none">exemple</span>':'')+'</div><div class="meta"><span>'+bits.join(' · ')+'</span>'+(Number(p.pao)>0?paoJar(Number(p.pao)):'')+dateTxt+'</div></div>'+
+    badge(p)+'</button>';
+}
+function sampleProducts(){
+  const mk=(type,cat,name,o)=>({id:uid8()+Math.random().toString(36).slice(2,4),type,cat,name,brand:'',actives:[],shade:'',finish:'',color:'',opened:'',pao:PAO_DEF[cat]||0,expiry:'',notes:'',finished:false,demo:true,created:todayStr(),...o});
+  return [
+    mk('skin','Nettoyant','Gel nettoyant doux',{opened:daysAgoStr(150)}),
+    mk('skin','Tonique','Lotion apaisante',{opened:daysAgoStr(200),actives:['Centella','Panthénol']}),
+    mk('skin','Sérum','Sérum niacinamide 10 %',{opened:daysAgoStr(100),actives:['Niacinamide','Zinc']}),
+    mk('skin','Sérum','Sérum vitamine C',{opened:daysAgoStr(172),actives:['Vitamine C']}),
+    mk('skin','Hydratant','Crème légère hydratante',{opened:daysAgoStr(60),actives:['Acide hyaluronique','Céramides']}),
+    mk('skin','SPF','Écran solaire visage SPF 50',{opened:daysAgoStr(205),actives:[]}),
+    mk('skin','Exfoliant','Lotion exfoliante AHA',{opened:daysAgoStr(40),actives:['AHA']}),
+    mk('skin','Masque','Masque argile purifiant',{expiry:daysAheadStr(400)}),
+    mk('makeup','Fond de teint','Fond de teint fluide',{shade:'Beige 3N',finish:'Satiné',color:'#D5AA85',opened:daysAgoStr(120)}),
+    mk('makeup','Correcteur','Correcteur liquide',{shade:'Beige clair',finish:'Satiné',color:'#E3BF9D',opened:daysAgoStr(120)}),
+    mk('makeup','Poudre','Poudre libre translucide',{finish:'Mat',opened:daysAgoStr(300)}),
+    mk('makeup','Blush','Blush crème',{shade:'Pêche rosé',finish:'Crémeux',color:'#E58B84',opened:daysAgoStr(90)}),
+    mk('makeup','Mascara','Mascara volume noir',{shade:'Noir',opened:daysAgoStr(95)}),
+    mk('makeup','Rouge à lèvres','Rouge à lèvres nude rosé',{shade:'Nude rosé',finish:'Satiné',color:'#B56B66',opened:daysAgoStr(200)}),
+    mk('makeup','Ombre à paupières','Palette ombres neutres',{shade:'Neutres chauds',finish:'Mat',opened:daysAgoStr(300)})
+  ];
+}
+
+/* ---------- misc ui helpers ---------- */
+let toastT=null;
+function toast(m){const t=$('#toast');t.textContent=m;t.hidden=false;clearTimeout(toastT);toastT=setTimeout(()=>{t.hidden=true},3200)}
+function root(path){return path.startsWith('draft.')?[sheet&&sheet.draft,path.slice(6),true]:[S,path,false]}
+function getPath(path){const [o,p]=root(path);return p.split('.').reduce((a,k)=>a==null?a:a[k],o)}
+function setPath(path,val){
+  const [o,p,d]=root(path);if(!o)return;
+  const ks=p.split('.');let c=o;for(let i=0;i<ks.length-1;i++)c=c[ks[i]];
+  c[ks[ks.length-1]]=val;if(!d)Store.saveMain();
+}
+function chips(path,opts,multi){
+  const cur=getPath(path);
+  return '<div class="chips" role="group">'+opts.map(o=>{
+    const on=multi?A(cur).includes(o):cur===o;
+    return '<button type="button" class="chip" aria-pressed="'+on+'" '+(multi?'data-chip':'data-single')+'="'+path+'" data-val="'+esc(o)+'">'+esc(o)+'</button>';
+  }).join('')+'</div>';
+}
+const field=(label,inner,id)=>'<div class="field"><label'+(id?' for="'+id+'"':'')+'>'+label+'</label>'+inner+'</div>';
+const busyBlock=(key,label)=>ui.busy&&ui.busy.key===key?'<div class="busy" role="status"><span class="spin"></span><div style="flex:1">'+esc(label)+'<div class="sub">Cela peut prendre une minute.</div></div><button class="btn ghost sm" data-act="ai-stop">Arrêter</button></div>':'';
+function errCopy(e){
+  const c=e&&e.code;
+  if(c==='not_granted'||c==='sampling_disabled'||c==='not_declared')return "L'analyse n'est pas autorisée pour cette page.";
+  if(c==='rate_limited')return "Trop de demandes ou limite d'usage atteinte. Réessaie un peu plus tard.";
+  if(c==='image_rejected')return "Une photo n'a pas pu être lue. Essaie une autre image.";
+  if(c==='invalid_json')return "La réponse n'a pas pu être lue. Relance l'analyse.";
+  if(c==='refused')return "Cette demande n'a pas pu être traitée avec ces éléments. Change la photo ou le texte.";
+  if(c==='session_expired')return "Ta session a expiré. Rouvre la page.";
+  return "L'analyse a échoué. Réessaie.";
+}
+async function aiCall(key,exec){
+  if(ui.busy||!AI.sample)return null;
+  ui.busy={key};ctl=new AbortController();render();if(sheet&&sheet.kind==='look')renderSheet();
+  try{return await exec(ctl.signal)}
+  catch(e){if(!e||e.code!=='cancelled')toast(errCopy(e));return null}
+  finally{ui.busy=null;ctl=null;render();if(sheet&&sheet.kind==='look')renderSheet()}
+}
+const JSON_RULE="Réponds uniquement avec un objet JSON valide, sans texte autour, en français.";
+
+/* ---------- images ---------- */
+async function loadBitmap(file){
+  if(window.createImageBitmap){try{return await createImageBitmap(file,{imageOrientation:'from-image'})}catch{}}
+  return await new Promise((res,rej)=>{const u=URL.createObjectURL(file);const im=new Image();im.onload=()=>{URL.revokeObjectURL(u);res(im)};im.onerror=()=>{URL.revokeObjectURL(u);rej(new Error('img'))};im.src=u});
+}
+async function toJpeg(file,max,q){
+  const b=await loadBitmap(file);
+  const r=Math.min(1,max/Math.max(b.width,b.height));
+  const w=Math.max(1,Math.round(b.width*r)),h=Math.max(1,Math.round(b.height*r));
+  const cv=document.createElement('canvas');cv.width=w;cv.height=h;
+  const cx=cv.getContext('2d');cx.fillStyle='#fff';cx.fillRect(0,0,w,h);cx.drawImage(b,0,0,w,h);
+  if(b.close)b.close();
+  return await new Promise((res,rej)=>cv.toBlob(x=>x?res(x):rej(new Error('blob')),'image/jpeg',q));
+}
+const blobToDataUrl=b=>new Promise((res,rej)=>{const f=new FileReader();f.onload=()=>res(f.result);f.onerror=rej;f.readAsDataURL(b)});
+function dataUrlToBlob(u){
+  const [h,b]=u.split(',');const mime=(h.match(/:(.*?);/)||[])[1]||'image/jpeg';
+  const bin=atob(b);const a=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)a[i]=bin.charCodeAt(i);
+  return new Blob([a],{type:mime});
+}
+
+/* ---------- prompts: data ---------- */
+function productsForAI(type){
+  return S.products.filter(p=>p.type===type&&!p.finished).map(p=>{
+    const s=status(p);
+    return {id:p.id,nom:p.name,marque:p.brand||undefined,categorie:p.cat,actifs:p.actives&&p.actives.length?p.actives:undefined,finition:p.finish||undefined,teinte:p.shade||undefined,
+      statut:s==='bad'?'expire':s==='soon'?'bientot':s==='ok'?'ok':'inconnu',joursRestants:daysLeft(p)};
+  });
+}
+const analysisBrief=()=>S.analysis?{resume:S.analysis.resume,typeProbable:S.analysis.typeProbable,criteres:S.analysis.criteres.map(c=>c.nom+' : '+c.etat)}:null;
+
+/* ---------- AI: skin analysis ---------- */
+function normAnalysis(r){
+  const et=v=>{v=norm(v);return v.startsWith('bon')?'bon':v.startsWith('a_')||v.includes('travail')?'travail':'moyen'};
+  return {date:todayStr(),resume:T(r.resume),typeProbable:T(r.typeProbable)||'incertain',confiance:T(r.confiance)||'moyenne',
+    criteres:A(r.criteres).map(c=>({nom:T(c.nom),etat:et(c.etat),note:T(c.note)})).filter(c=>c.nom),
+    zones:A(r.zones).map(z=>({zone:T(z.zone),observation:T(z.observation)})).filter(z=>z.zone),
+    aConsulter:A(r.aConsulter).map(String),conseilsPhoto:A(r.conseilsPhoto).map(String)};
+}
+async function analyzeSkin(){
+  const used=SLOTS.filter(s=>photos[s.k]);
+  const withImgs=used.length>0&&AI.images;
+  const order=used.map((s,i)=>(i+1)+') '+s.label).join(' ; ');
+  const prompt=[
+    "Tu es un conseiller skincare bienveillant et rigoureux (tu n'es pas médecin). Tu analyses la peau d'une personne à partir "+(withImgs?"de photos, dans cet ordre : "+order+".":"de son profil déclaré uniquement (aucune photo disponible)."),
+    "Profil déclaré : "+JSON.stringify(S.skin),
+    "Règles : décris seulement ce qui est visible ou déclaré (hydratation apparente, brillance, texture et pores, rougeurs, imperfections, taches, ridules). Nuance selon la lumière et la qualité des photos. Ne pose aucun diagnostic médical et n'identifie pas la personne. Mets dans \"aConsulter\" tout signe pour lequel un avis dermatologique serait prudent (lésion qui change ou saigne, acné sévère ou douloureuse, éruption, grain de beauté inhabituel). Ton direct et doux.",
+    JSON_RULE+' Format : {"resume":"2 à 3 phrases","typeProbable":"grasse|mixte|sèche|normale|déshydratée|incertain","confiance":"faible|moyenne|bonne","criteres":[{"nom":"Hydratation","etat":"bon|moyen|a_travailler","note":"1 phrase"}],"zones":[{"zone":"Joues","observation":"1 phrase"}],"aConsulter":["..."],"conseilsPhoto":["pour de meilleures photos..."]}. Les critères, dans cet ordre : Hydratation, Sébum et brillance, Texture et pores, Rougeurs et sensibilité, Imperfections, Taches et uniformité, Ridules et fermeté.'
+  ].join('\n\n');
+  const opts=sig=>{const o={signal:sig,cache:false};if(withImgs)o.images=used.map(s=>photos[s.k].blob);return o};
+  const r=await aiCall('skin',signal=>AI.sample.json(prompt,opts(signal)));
+  if(!r)return;
+  if(S.analysis)S.history=[{date:S.analysis.date,typeProbable:S.analysis.typeProbable,resume:S.analysis.resume},...S.history].slice(0,6);
+  S.analysis=normAnalysis(r);Store.saveMain();ui.skinTab='photos';render();
+  toast('Analyse terminée');
+}
+
+/* ---------- AI: routine ---------- */
+const normMiss=m=>{const r=m.recherche||{};return {categorie:T(m.categorie),pourquoi:T(m.pourquoi),actifs:A(r.actifs).map(String),texture:T(r.texture),teinte:T(r.teinte),finition:T(r.finition),budget:T(r.budget),exemples:A(r.exemples).map(String)}};
+const okId=id=>prod(id)?id:null;
+const normStep=s=>({etape:T(s.etape),produitId:okId(s.produitId),consigne:T(s.consigne||s.geste),pourquoi:T(s.pourquoi),frequence:T(s.frequence)});
+function normRoutine(r){
+  return {date:todayStr(),verdict:T(r.verdict)||'partiel',verdictTexte:T(r.verdictTexte),
+    matin:A(r.matin).map(normStep).filter(s=>s.etape),soir:A(r.soir).map(normStep).filter(s=>s.etape),hebdo:A(r.hebdo).map(normStep).filter(s=>s.etape),
+    aEviter:A(r.aEviter).map(x=>({produitId:okId(x.produitId),raison:T(x.raison)})).filter(x=>x.produitId),
+    associations:A(r.associationsARisque).map(String),manques:A(r.manques).map(normMiss).filter(m=>m.categorie),progression:T(r.progression)};
+}
+async function buildRoutine(){
+  const items=productsForAI('skin');
+  const prompt=[
+    "Tu es un conseiller skincare rigoureux (tu n'es pas médecin). Construis une routine à partir UNIQUEMENT des produits de soin que cette personne possède, et dis honnêtement quand ils ne conviennent pas.",
+    "Date du jour : "+todayStr()+".",
+    "Profil : "+JSON.stringify(S.skin),
+    "Dernière analyse de peau : "+JSON.stringify(analysisBrief()),
+    "Produits de soin possédés : "+JSON.stringify(items),
+    ["Règles :",
+     "- N'utilise que des produitId de la liste. Si une étape utile n'est couverte par aucun produit adapté, mets produitId à null et ajoute la catégorie dans \"manques\".",
+     "- Un produit au statut \"expire\" n'entre jamais dans la routine : mets-le dans \"aEviter\" avec la raison. Un produit \"bientot\" est à privilégier pour être fini à temps.",
+     "- Respecte les précautions et ingrédients à éviter déclarés. Ne combine pas des actifs qui s'irritent entre eux (par exemple rétinol avec AHA ou BHA, ou vitamine C acide, le même soir) et signale tout risque dans \"associationsARisque\".",
+     "- Matin : nettoyage doux si besoin, soin, hydratant, SPF (obligatoire). Soir : démaquillage si besoin, nettoyage, actif, hydratant.",
+     "- Nombre d'étapes selon le choix \"steps\" du profil (Minimaliste 3, Équilibrée 4 à 5, Complète 6 ou plus).",
+     "- Si aucun produit n'est adapté, verdict \"insuffisant\" et dis-le clairement dans verdictTexte.",
+     "- Aucune promesse médicale. Pour les produits à acheter, décris le type, les actifs, la texture et un budget (€, €€ ou €€€). Tu peux citer au plus 2 références courantes en France dans \"exemples\", à vérifier par la personne (composition, prix), ou laisser vide."].join('\n'),
+    JSON_RULE+' Format : {"verdict":"ok|partiel|insuffisant","verdictTexte":"1 à 2 phrases","matin":[{"etape":"Nettoyer","produitId":"id ou null","consigne":"geste court","pourquoi":"1 phrase"}],"soir":[...],"hebdo":[{"frequence":"2 soirs par semaine","etape":"Exfolier","produitId":"id ou null","consigne":"..."}],"aEviter":[{"produitId":"id","raison":"..."}],"associationsARisque":["..."],"manques":[{"categorie":"SPF","pourquoi":"...","recherche":{"actifs":["..."],"texture":"...","budget":"€€","exemples":["..."]}}],"progression":"conseil pour introduire les actifs"}'
+  ].join('\n\n');
+  const r=await aiCall('routine',signal=>AI.sample.json(prompt,{signal,cache:false}));
+  if(!r)return;
+  S.routine=normRoutine(r);S.done={date:'',ids:[]};Store.saveMain();render();toast('Routine prête');
+}
+
+/* ---------- AI: makeup plan ---------- */
+function normMk(r){
+  return {date:todayStr(),verdict:T(r.verdict)||'partiel',verdictTexte:T(r.verdictTexte),
+    routine:A(r.routine).map(normStep).filter(s=>s.etape),
+    adaptes:A(r.adaptes).map(x=>({produitId:okId(x.produitId),pourquoi:T(x.pourquoi)})).filter(x=>x.produitId),
+    peuAdaptes:A(r.peuAdaptes).map(x=>({produitId:okId(x.produitId),raison:T(x.raison)})).filter(x=>x.produitId),
+    manques:A(r.manques).map(normMiss).filter(m=>m.categorie),astuces:A(r.astuces).map(String)};
+}
+async function buildMkPlan(){
+  const prompt=[
+    "Tu es un maquilleur conseil bienveillant. À partir UNIQUEMENT du maquillage que cette personne possède, dis ce qui est adapté à sa façon de se maquiller et au rendu voulu, propose une routine maquillage dans l'ordre d'application, et dis honnêtement quand ses produits ne conviennent pas.",
+    "Date du jour : "+todayStr()+".",
+    "Habitudes et rendu souhaité : "+JSON.stringify(S.mk),
+    "Peau (pour la compatibilité des bases) : "+JSON.stringify({type:S.skin.type,sensibilite:S.skin.sensi,problematiques:S.skin.concerns}),
+    "Maquillage possédé : "+JSON.stringify(productsForAI('makeup')),
+    ["Règles :",
+     "- N'utilise que des produitId de la liste. Étape non couverte : produitId null et ajoute la catégorie dans \"manques\".",
+     "- Un produit au statut \"expire\" n'est jamais conseillé (surtout mascara, eye-liner, produits pour les yeux) : mets-le dans \"peuAdaptes\" avec la raison.",
+     "- Adapte la routine à la fréquence et au temps disponible (peu de temps : 3 à 4 étapes).",
+     "- Vérifie les teintes et finitions par rapport au teint et au sous-ton déclarés ; si une teinte est douteuse, dis-le.",
+     "- Si rien n'est adapté, verdict \"insuffisant\". Pour les achats : catégorie, teinte ou finition à viser, budget (€, €€, €€€), au plus 2 exemples courants en France à vérifier."].join('\n'),
+    JSON_RULE+' Format : {"verdict":"ok|partiel|insuffisant","verdictTexte":"1 à 2 phrases","routine":[{"etape":"Teint","produitId":"id ou null","geste":"geste court","pourquoi":"1 phrase"}],"adaptes":[{"produitId":"id","pourquoi":"..."}],"peuAdaptes":[{"produitId":"id","raison":"..."}],"manques":[{"categorie":"Blush","pourquoi":"...","recherche":{"teinte":"...","finition":"...","budget":"€€","exemples":["..."]}}],"astuces":["..."]}'
+  ].join('\n\n');
+  const r=await aiCall('mk',signal=>AI.sample.json(prompt,{signal,cache:false}));
+  if(!r)return;
+  S.mkPlan=normMk(r);Store.saveMain();render();toast('Conseils prêts');
+}
+
+/* ---------- AI: look ---------- */
+function normLook(r){
+  return {date:todayStr(),titre:T(r.titre),description:T(r.description),difficulte:T(r.difficulte),duree:T(r.duree),
+    etapes:A(r.etapes).map(e=>({zone:T(e.zone),geste:T(e.geste),produitId:okId(e.produitId),manque:e.manque&&typeof e.manque==='object'?{categorie:T(e.manque.categorie),teinte:T(e.manque.teinte),finition:T(e.manque.finition),alternative:T(e.manque.alternative)}:null})).filter(e=>e.zone||e.geste),
+    conseils:A(r.conseils).map(String)};
+}
+async function analyzeLook(id){
+  const L=S.looks.find(x=>x.id===id);if(!L)return;
+  const blob=lookBlobs[id]||dataUrlToBlob(L.thumb);
+  const prompt=[
+    "Tu es un maquilleur conseil. L'image est un look de maquillage que la personne aime. Décris uniquement le maquillage (teint, yeux, sourcils, joues, lèvres) sans chercher à identifier la personne.",
+    "Explique comment le reproduire avec le maquillage qu'elle possède déjà. Habitudes : "+JSON.stringify({temps:S.mk.time,couvrance:S.mk.coverage,teint:S.mk.tone,contraintes:S.mk.constraints}),
+    "Maquillage possédé : "+JSON.stringify(productsForAI('makeup')),
+    ["Règles :",
+     "- Étapes dans l'ordre d'application. Pour chaque étape, choisis le meilleur produitId de la liste ; si rien ne convient (catégorie absente, teinte ou finition trop éloignée, produit expiré), mets produitId null et remplis \"manque\" avec la catégorie, la teinte, la finition à viser et une alternative possible avec ce que la personne a déjà.",
+     "- Ne force pas : un produit dont la teinte ne correspond pas n'est pas une bonne réponse.",
+     "- Indique la difficulté (facile, moyen ou avancé) et la durée approximative."].join('\n'),
+    JSON_RULE+' Format : {"titre":"nom court du look","description":"1 à 2 phrases sur ce qu\'on voit","difficulte":"facile|moyen|avancé","duree":"environ 10 min","etapes":[{"zone":"Teint","geste":"geste court","produitId":"id ou null","manque":null}],"conseils":["..."]}. Quand produitId est null, "manque" vaut {"categorie":"...","teinte":"...","finition":"...","alternative":"..."}.'
+  ].join('\n\n');
+  const r=await aiCall('look:'+id,signal=>AI.sample.json(prompt,{signal,cache:false,images:blob}));
+  if(!r)return;
+  L.result=normLook(r);if(L.title==='Nouveau look'&&L.result.titre)L.title=L.result.titre;
+  Store.saveItem('looks',L);render();renderSheet();toast('Look analysé');
+}
+function fidelity(L){
+  const e=L.result?L.result.etapes:[];if(!e.length)return null;
+  const ok=e.filter(x=>x.produitId).length;return {ok,total:e.length,pct:Math.round(ok/e.length*100)};
+}
+
+/* ---------- wishlist ---------- */
+function guessCat(type,label){const n=norm(label);return catsOf(type).find(c=>n.includes(norm(c)))||''}
+function addWish(w){
+  if(S.wish.some(x=>norm(x.label)===norm(w.label)))return toast('Déjà dans tes envies.');
+  const it={id:uid8(),created:todayStr(),type:'skin',cat:'',note:'',budget:'',from:'manuel',...w};
+  if(!it.cat)it.cat=guessCat(it.type,it.label);
+  S.wish.push(it);Store.saveItem('wish',it);toast('Ajouté à tes envies');render();
+}
+function missToWish(m,type,from){
+  const parts=[];
+  if(m.actifs&&m.actifs.length)parts.push(m.actifs.join(', '));
+  if(m.texture)parts.push(m.texture);if(m.teinte)parts.push(m.teinte);if(m.finition)parts.push(m.finition);
+  if(m.exemples&&m.exemples.length)parts.push('Pistes à vérifier : '+m.exemples.join(' ; '));
+  addWish({label:m.categorie,type,note:parts.join(' · ')||m.pourquoi,budget:m.budget,from});
+}
+function needHTML(m,src,i,extra){
+  const looking=[];
+  if(m.actifs&&m.actifs.length)looking.push('actifs : '+esc(m.actifs.join(', ')));
+  if(m.texture)looking.push('texture : '+esc(m.texture));
+  if(m.teinte)looking.push('teinte : '+esc(m.teinte));
+  if(m.finition)looking.push('finition : '+esc(m.finition));
+  return '<div class="need"><div class="need-h"><b>'+esc(m.categorie)+'</b>'+(m.budget?'<span class="budget">'+esc(m.budget)+'</span>':'')+'</div>'+
+    (m.pourquoi?'<p class="sub">'+esc(m.pourquoi)+'</p>':'')+
+    (looking.length?'<p class="sub"><b>À chercher</b> · '+looking.join(' · ')+'</p>':'')+
+    (m.exemples&&m.exemples.length?'<p class="sub">Pistes à vérifier (composition, prix) : '+esc(m.exemples.join(' ; '))+'</p>':'')+
+    '<div><button class="btn ghost sm" data-act="wish-from" data-src="'+src+'" data-i="'+i+'"'+(extra||'')+'>'+ic('plus',16)+' Ajouter aux envies</button></div></div>';
+}
+
+/* ---------- views ---------- */
+const TABS=[['today','Accueil','sun'],['cabinet','Placard','jar'],['skin','Peau','drop'],['makeup','Maquillage','lip'],['wish','Envies','bag']];
+function renderChrome(){
+  $('#tabs').innerHTML=TABS.map(([k,l,i])=>'<button class="tab" data-act="tab" data-val="'+k+'"'+(ui.tab===k?' aria-current="page"':'')+'>'+ic(i,22)+'<span>'+l+'</span></button>').join('');
+  const st=$('#store');
+  st.className='store '+(Store.mode==='db'?'':Store.mode);
+  st.textContent=!ready?'Chargement':Store.mode==='db'?'Synchronisé':Store.mode==='local'?'Sur cet appareil':'Non enregistré';
+}
+function render(){
+  renderChrome();
+  const v=$('#view');
+  if(!ready){v.innerHTML='<p class="muted">Chargement de ton coin beauté…</p>';return}
+  v.innerHTML=({today:viewToday,cabinet:viewCabinet,skin:viewSkin,makeup:viewMakeup,wish:viewWish})[ui.tab]();
+  if(ui.tab==='cabinet')renderList();
+}
+function go(tab){ui.tab=tab;render();window.scrollTo(0,0)}
+
+function stepsHTML(steps,when,mode){
+  return steps.map((s,i)=>{
+    const p=prod(s.produitId),id=when+':'+i;
+    const on=S.done.date===todayStr()&&S.done.ids.includes(id);
+    const left=mode==='check'?'<button class="ck" data-act="done" data-id="'+id+'" aria-pressed="'+on+'" aria-label="Fait : '+esc(s.etape)+'">'+ic('check',16)+'</button>':'<span class="idx">'+(i+1)+'</span>';
+    const pl=p?'<button class="pchip" data-act="open-product" data-id="'+p.id+'">'+esc(p.name)+'</button>':'<span class="miss">Produit manquant</span>';
+    return '<div class="step">'+left+'<div class="sb"><div class="st-h"><b>'+esc(s.etape)+'</b>'+pl+(s.frequence?'<span class="budget">'+esc(s.frequence)+'</span>':'')+'</div>'+
+      (s.consigne?'<p class="sub">'+esc(s.consigne)+'</p>':'')+(mode==='read'&&s.pourquoi?'<p class="why">'+esc(s.pourquoi)+'</p>':'')+'</div></div>';
+  }).join('');
+}
+const verdictNote=(v,t)=>t?'<div class="note '+(v==='insuffisant'?'bad':v==='ok'?'ok':'')+'">'+esc(t)+'</div>':'';
+
+function viewToday(){
+  const now=new Date();
+  const dt=now.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'});
+  const act=S.products.filter(p=>!p.finished);
+  const soon=act.filter(p=>status(p)==='soon').sort(byDays),bad=act.filter(p=>status(p)==='bad').sort(byDays);
+  let h='<div class="stack"><div class="gap-s"><p class="eyebrow">'+esc(dt)+'</p><h2>'+(now.getHours()<18?'Bonjour':'Bonsoir')+'</h2></div>';
+  if(!S.products.length){
+    h+='<div class="empty"><span class="tile">'+ic('jar',22)+'</span><h3>Commence par ton placard</h3><p class="muted">Ajoute tes produits avec leur date d\'ouverture et leur PAO, puis décris ta peau pour obtenir une routine.</p><div class="row-flex" style="justify-content:center"><button class="btn primary" data-act="open-product" data-id="">'+ic('plus')+' Ajouter un produit</button><button class="btn ghost" data-act="load-demo">Voir avec des exemples</button></div></div>';
+    return h+'</div>';
+  }
+  const R=S.routine;
+  if(R&&(R.matin.length||R.soir.length)){
+    const steps=R[ui.when]||[];
+    const doneN=steps.filter((s,i)=>S.done.date===todayStr()&&S.done.ids.includes(ui.when+':'+i)).length;
+    h+='<section class="panel"><div class="kv"><h3>Ma routine du jour</h3><span class="budget">'+doneN+'/'+steps.length+'</span></div>'+
+      '<div class="seg" role="group" aria-label="Moment"><button aria-pressed="'+(ui.when==='matin')+'" data-act="when" data-val="matin">Matin</button><button aria-pressed="'+(ui.when==='soir')+'" data-act="when" data-val="soir">Soir</button></div>'+
+      '<div>'+(steps.length?stepsHTML(steps,ui.when,'check'):'<p class="muted">Aucune étape pour ce moment.</p>')+'</div></section>';
+  }else{
+    h+='<div class="panel flat"><h3>Pas encore de routine</h3><p class="muted">Décris ta peau et laisse Claude composer une routine avec les produits de ton placard.</p><div><button class="btn primary" data-act="goto-routine">'+ic('spark')+' Créer ma routine</button></div></div>';
+  }
+  if(bad.length)h+='<section><div class="list-h"><h3>À remplacer</h3><span class="budget">'+bad.length+' expiré'+(bad.length>1?'s':'')+'</span></div><div class="list">'+bad.slice(0,5).map(rowHTML).join('')+'</div></section>';
+  if(soon.length)h+='<section><div class="list-h"><h3>À finir en priorité</h3><span class="budget">30 jours</span></div><div class="list">'+soon.slice(0,5).map(rowHTML).join('')+'</div></section>';
+  if(!bad.length&&!soon.length)h+='<div class="note ok">Rien ne périme dans les 30 prochains jours.</div>';
+  return h+'</div>';
+}
+
+function viewCabinet(){
+  const f=ui.filter;
+  const act=S.products.filter(p=>!p.finished);
+  const nSoon=act.filter(p=>status(p)==='soon').length,nBad=act.filter(p=>status(p)==='bad').length;
+  const seg=[['all','Tout'],['skin','Soin'],['makeup','Maquillage']].map(([k,l])=>'<button aria-pressed="'+(f.type===k)+'" data-act="ftype" data-val="'+k+'">'+l+'</button>').join('');
+  const flags=[['soon','À finir vite'],['bad','Expirés'],['done','Terminés']].map(([k,l])=>'<button class="chip" aria-pressed="'+(f.flag===k)+'" data-act="flag" data-val="'+k+'">'+l+'</button>').join('');
+  const hasDemo=S.products.some(p=>p.demo);
+  return '<div class="stack"><div class="kv"><div class="gap-s"><h2>Placard</h2><p class="sub mono">'+act.length+' en cours · '+nSoon+' à finir vite · '+nBad+' expiré'+(nBad>1?'s':'')+'</p></div><button class="btn primary" data-act="open-product" data-id="">'+ic('plus')+' Ajouter</button></div>'+
+    (hasDemo?'<div class="note info">Les produits marqués « exemple » servent à tester l\'application. <button class="btn ghost sm" data-act="clear-demo" style="margin-left:6px">Supprimer les exemples</button></div>':'')+
+    '<div class="seg" role="group" aria-label="Type">'+seg+'</div>'+
+    '<div class="field"><label for="q">Chercher</label><input id="q" type="text" placeholder="Nom, marque, catégorie, actif…" value="'+esc(f.q)+'"></div>'+
+    '<div class="row-flex"><div class="chips">'+flags+'</div><div style="margin-left:auto;min-width:150px"><label class="lbl" for="sort" style="display:none">Tri</label><select id="sort" aria-label="Trier par">'+
+      [['expiry','Péremption'],['name','Nom'],['cat','Catégorie'],['recent','Ajout récent']].map(([k,l])=>'<option value="'+k+'"'+(f.sort===k?' selected':'')+'>'+l+'</option>').join('')+'</select></div></div>'+
+    '<div id="plist"></div></div>';
+}
+function filtered(){
+  const f=ui.filter;
+  let L=S.products.filter(p=>f.flag==='done'?p.finished:!p.finished);
+  if(f.type!=='all')L=L.filter(p=>p.type===f.type);
+  if(f.flag==='soon')L=L.filter(p=>['soon','bad'].includes(status(p)));
+  if(f.flag==='bad')L=L.filter(p=>status(p)==='bad');
+  if(f.q){const q=norm(f.q);L=L.filter(p=>norm([p.name,p.brand,p.cat,p.shade,...A(p.actives)].join(' ')).includes(q))}
+  if(f.sort==='name')L.sort((a,b)=>a.name.localeCompare(b.name,'fr'));
+  else if(f.sort==='cat')L.sort((a,b)=>(a.type+a.cat).localeCompare(b.type+b.cat,'fr'));
+  else if(f.sort==='recent')L.sort((a,b)=>String(b.created).localeCompare(String(a.created)));
+  else L.sort(byDays);
+  return L;
+}
+function renderList(){
+  const el=$('#plist');if(!el)return;
+  const L=filtered();
+  if(!S.products.length){
+    el.innerHTML='<div class="empty"><span class="tile">'+ic('jar',22)+'</span><h3>Ton placard est vide</h3><p class="muted">Chaque produit garde sa date d\'ouverture, sa PAO et sa date de péremption pour te prévenir avant qu\'il ne tourne.</p><div class="row-flex" style="justify-content:center"><button class="btn primary" data-act="open-product" data-id="">'+ic('plus')+' Ajouter un produit</button><button class="btn ghost" data-act="load-demo">Charger des exemples</button></div></div>';
+    return;
+  }
+  el.innerHTML=L.length?'<div class="list">'+L.map(rowHTML).join('')+'</div>':'<div class="empty"><p class="muted">Aucun produit ne correspond à ces filtres.</p></div>';
+}
+
+/* --- skin --- */
+function viewSkin(){
+  const t=ui.skinTab;
+  const seg='<div class="seg" role="group" aria-label="Section peau">'+[['profil','Profil'],['photos','Analyse'],['routine','Routine']].map(([k,l])=>'<button aria-pressed="'+(t===k)+'" data-act="skin-tab" data-val="'+k+'">'+l+'</button>').join('')+'</div>';
+  return '<div class="stack"><h2>Ma peau</h2>'+seg+(t==='profil'?skinProfile():t==='photos'?skinPhotos():skinRoutine())+'</div>';
+}
+function skinProfile(){
+  const s=S.skin;
+  return '<div class="panel">'+
+    field('Type de peau',chips('skin.type',['Grasse','Mixte','Sèche','Normale','Je ne sais pas'],false))+
+    field('Sensibilité',chips('skin.sensi',['Très réactive','Un peu sensible','Pas sensible'],false))+
+    field('Problématiques actuelles',chips('skin.concerns',['Boutons','Points noirs','Rougeurs','Taches','Ridules','Pores dilatés','Teint terne','Déshydratation','Cernes','Sécheresse','Brillance'],true))+
+    field('Comment elle se sent en ce moment',chips('skin.feel',['Tiraillements','Brille vite','Irritée','Poussée de boutons','Terne','Bien'],true))+
+    field('Ressenti en mots',"<textarea id=\"sk-feel\" data-bind=\"skin.feelText\" placeholder=\"Ex. : tiraillements après la douche, boutons autour du menton avant les règles…\">"+esc(s.feelText)+"</textarea>",'sk-feel')+
+    field('Ce que je souhaite',"<textarea id=\"sk-goals\" data-bind=\"skin.goals\" placeholder=\"Ex. : moins de points noirs, un teint plus uniforme, une routine courte\">"+esc(s.goals)+"</textarea>",'sk-goals')+
+    field('À éviter ou précautions','<input id="sk-avoid" type="text" data-bind="skin.avoid" placeholder="Parfum, grossesse, traitement en cours, allergies…" value="'+esc(s.avoid)+'">','sk-avoid')+
+    field('Longueur de la routine',chips('skin.steps',['Minimaliste','Équilibrée','Complète'],false))+
+    '<div class="row-flex"><button class="btn primary" data-act="skin-tab" data-val="photos">Continuer vers l\'analyse</button></div></div>';
+}
+function skinPhotos(){
+  const a=S.analysis;
+  const imgsOk=!!AI.images;
+  let h='';
+  if(!AI.sample)h+='<div class="note">L\'analyse par Claude n\'est pas disponible dans cette vue. Le placard et ton profil restent utilisables.</div>';
+  h+='<div class="panel"><h3>Photos de ma peau</h3>';
+  if(imgsOk){
+    h+='<p class="sub">Peau nue, en lumière du jour, sans filtre. Une photo de face, deux de profil, puis des zooms. Les photos servent à l\'analyse et ne sont pas enregistrées.</p>'+
+      '<div class="slots">'+SLOTS.slice(0,Math.min(5,AI.images.maxCount||5)).map(s=>{
+        const p=photos[s.k];
+        return '<div class="slot" data-act="pick-photo" data-k="'+s.k+'" role="button" tabindex="0" aria-label="'+esc(s.label)+'">'+
+          (p?'<img src="'+p.url+'" alt="'+esc(s.label)+'"><span class="cap">'+esc(s.label)+'</span><button class="rm" data-act="rm-photo" data-k="'+s.k+'" aria-label="Retirer la photo">'+ic('x',16)+'</button>':ic('cam',24)+'<span>'+esc(s.label)+'</span>')+
+          '<input id="ph-'+s.k+'" data-slot="'+s.k+'" type="file" accept="image/*" hidden></div>';
+      }).join('')+'</div>';
+  }else{
+    h+='<p class="sub">L\'envoi de photos n\'est pas disponible dans cette vue : l\'analyse se fera d\'après ton profil.</p>';
+  }
+  h+=busyBlock('skin','Claude examine ta peau…');
+  h+='<div><button class="btn primary" data-act="skin-analyze"'+(ui.busy||!AI.sample?' disabled':'')+'>'+ic('spark')+' '+(a?'Relancer l\'analyse':'Analyser ma peau')+'</button></div></div>';
+  if(a){
+    const lab={bon:'Bon',moyen:'Moyen',travail:'À travailler'},cls={bon:'ok',moyen:'soon',travail:'bad'};
+    h+='<section class="panel"><div class="kv"><span class="eyebrow">Analyse du '+esc(fmtDate(parseISO(a.date)||new Date()))+'</span><span class="budget">confiance '+esc(a.confiance)+'</span></div>'+
+      '<p>'+esc(a.resume)+'</p><div class="kv"><span class="muted">Type probable</span><b>'+esc(a.typeProbable)+'</b></div>'+
+      '<div>'+a.criteres.map(c=>'<div class="crit"><b>'+esc(c.nom)+'</b><span class="st '+cls[c.etat]+'">'+lab[c.etat]+'</span>'+(c.note?'<p>'+esc(c.note)+'</p>':'')+'</div>').join('')+'</div>'+
+      (a.zones.length?'<div><h3>Par zone</h3>'+a.zones.map(z=>'<p class="sub" style="margin-top:6px"><b>'+esc(z.zone)+'</b> · '+esc(z.observation)+'</p>').join('')+'</div>':'')+
+      (a.aConsulter.length?'<div class="note"><b>À montrer à un professionnel</b><br>'+a.aConsulter.map(esc).join('<br>')+'</div>':'')+
+      (a.conseilsPhoto.length?'<p class="sub">Pour de meilleures photos : '+a.conseilsPhoto.map(esc).join(' ; ')+'</p>':'')+
+      '<p class="sub">Observation indicative faite à partir de photos, qui ne remplace pas un avis médical.</p>'+
+      '<div><button class="btn primary" data-act="skin-tab" data-val="routine">Voir ma routine</button></div></section>';
+    if(S.history.length)h+='<section><div class="list-h"><h3>Analyses précédentes</h3></div><div class="list">'+S.history.map(x=>'<div class="row" style="cursor:default;grid-template-columns:minmax(0,1fr) auto"><div style="min-width:0"><div class="nm">'+esc(x.typeProbable)+'</div><div class="sub">'+esc(x.resume)+'</div></div><span class="budget">'+esc(fmtDate(parseISO(x.date)||new Date()))+'</span></div>').join('')+'</div></section>';
+  }
+  return h;
+}
+function skinRoutine(){
+  const n=S.products.filter(p=>p.type==='skin'&&!p.finished).length;
+  const R=S.routine;
+  let h='<div class="panel"><h3>Routine d\'après mon placard</h3><p class="sub">Basée sur '+n+' produit'+(n>1?'s':'')+' de soin en cours, mon profil'+(S.analysis?' et ma dernière analyse':'')+'. Les produits expirés sont écartés.</p>'+
+    busyBlock('routine','Claude compose ta routine…')+
+    '<div><button class="btn primary" data-act="routine-build"'+(ui.busy||!AI.sample?' disabled':'')+'>'+ic('spark')+' '+(R?'Refaire ma routine':'Créer ma routine')+'</button></div></div>';
+  if(!R)return h;
+  h+=verdictNote(R.verdict,R.verdictTexte);
+  if(R.matin.length)h+='<section class="panel"><h3>Matin</h3><div>'+stepsHTML(R.matin,'matin','read')+'</div></section>';
+  if(R.soir.length)h+='<section class="panel"><h3>Soir</h3><div>'+stepsHTML(R.soir,'soir','read')+'</div></section>';
+  if(R.hebdo.length)h+='<section class="panel"><h3>Dans la semaine</h3><div>'+stepsHTML(R.hebdo,'hebdo','read')+'</div></section>';
+  if(R.associations.length)h+='<div class="note"><b>Associations à surveiller</b><br>'+R.associations.map(esc).join('<br>')+'</div>';
+  if(R.aEviter.length)h+='<section class="panel"><h3>À laisser de côté</h3><div class="gap-s">'+R.aEviter.map(x=>{const p=prod(x.produitId);return '<div><button class="pchip" data-act="open-product" data-id="'+x.produitId+'">'+esc(p.name)+'</button><p class="sub" style="margin-top:4px">'+esc(x.raison)+'</p></div>'}).join('')+'</div></section>';
+  if(R.manques.length)h+='<section class="stack"><h3>Ce qu\'il manque</h3>'+R.manques.map((m,i)=>needHTML(m,'routine',i)).join('')+'</section>';
+  else if(R.verdict==='ok')h+='<div class="note ok">Ton placard couvre cette routine : rien à acheter.</div>';
+  if(R.progression)h+='<p class="sub">'+esc(R.progression)+'</p>';
+  return h;
+}
+
+/* --- makeup --- */
+function viewMakeup(){
+  const t=ui.mkTab;
+  const seg='<div class="seg" role="group" aria-label="Section maquillage">'+[['profil','Mon maquillage'],['looks','Looks inspirants']].map(([k,l])=>'<button aria-pressed="'+(t===k)+'" data-act="mk-tab" data-val="'+k+'">'+l+'</button>').join('')+'</div>';
+  return '<div class="stack mk"><h2>Maquillage</h2>'+seg+(t==='profil'?mkProfile():mkLooks())+'</div>';
+}
+function mkProfile(){
+  const m=S.mk,P=S.mkPlan;
+  const n=S.products.filter(p=>p.type==='makeup'&&!p.finished).length;
+  let h='<div class="panel">'+
+    field('À quelle fréquence je me maquille',chips('mk.freq',['Presque jamais','Pour les occasions','1 à 2 fois par semaine','Plusieurs fois par semaine','Tous les jours'],false))+
+    field('Temps disponible',chips('mk.time',['2 minutes','5 minutes','10 minutes','20 minutes ou plus'],false))+
+    field('Rendu que je veux',chips('mk.rendu',['Naturel, effet bonne mine','Frais et lumineux','Mat longue tenue','Glam','Coloré ou graphique','Soirée'],true))+
+    field('Couvrance',chips('mk.coverage',['Légère','Moyenne','Forte'],false))+
+    field('Quand je me maquille',chips('mk.occasions',['Travail','Au quotidien','Sorties','Événements et photos'],true))+
+    field('Teint et sous-ton','<input id="mk-tone" type="text" data-bind="mk.tone" placeholder="Ex. : clair, sous-ton neutre, rougeurs sur les joues" value="'+esc(m.tone)+'">','mk-tone')+
+    field('Contraintes','<input id="mk-cons" type="text" data-bind="mk.constraints" placeholder="Yeux sensibles, lentilles, vegan, produits sans parfum…" value="'+esc(m.constraints)+'">','mk-cons')+
+    busyBlock('mk','Claude passe ton maquillage en revue…')+
+    '<div><button class="btn primary" data-act="mk-build"'+(ui.busy||!AI.sample?' disabled':'')+'>'+ic('spark')+' '+(P?'Refaire les conseils':'Voir ce que je peux faire avec mon stock')+'</button></div>'+
+    '<p class="sub">'+n+' produit'+(n>1?'s':'')+' de maquillage en cours dans ton placard.</p></div>';
+  if(!AI.sample)h='<div class="note">Les conseils par Claude ne sont pas disponibles dans cette vue.</div>'+h;
+  if(!P)return h;
+  h+=verdictNote(P.verdict,P.verdictTexte);
+  if(P.routine.length)h+='<section class="panel"><h3>Ma routine maquillage</h3><div>'+stepsHTML(P.routine,'mk','read')+'</div></section>';
+  if(P.adaptes.length)h+='<section class="panel"><h3>Bien adaptés</h3><div class="gap-s">'+P.adaptes.map(x=>'<div><button class="pchip" data-act="open-product" data-id="'+x.produitId+'">'+esc(prod(x.produitId).name)+'</button><p class="sub" style="margin-top:4px">'+esc(x.pourquoi)+'</p></div>').join('')+'</div></section>';
+  if(P.peuAdaptes.length)h+='<section class="panel"><h3>Peu adaptés ou à remplacer</h3><div class="gap-s">'+P.peuAdaptes.map(x=>'<div><button class="pchip" data-act="open-product" data-id="'+x.produitId+'">'+esc(prod(x.produitId).name)+'</button><p class="sub" style="margin-top:4px">'+esc(x.raison)+'</p></div>').join('')+'</div></section>';
+  if(P.manques.length)h+='<section class="stack"><h3>À acheter pour compléter</h3>'+P.manques.map((x,i)=>needHTML(x,'mk',i)).join('')+'</section>';
+  if(P.astuces.length)h+='<section class="panel"><h3>Astuces</h3>'+P.astuces.map(a=>'<p class="sub">'+esc(a)+'</p>').join('')+'</section>';
+  return h;
+}
+function mkLooks(){
+  let h='<div class="panel"><h3>Des looks que j\'aime</h3><p class="sub">Ajoute une photo de maquillage. Claude décrit le look et dit comment le refaire avec ce que tu as déjà, ou ce qu\'il faudrait acheter.</p>';
+  if(AI.images)h+='<div><button class="btn primary" data-act="look-new">'+ic('plus')+' Ajouter un look</button><input id="lk-file" type="file" accept="image/*" hidden></div>';
+  else h+='<div class="note">L\'envoi de photos n\'est pas disponible dans cette vue.</div>';
+  h+='</div>';
+  if(!S.looks.length)return h+'<div class="empty"><span class="tile mk">'+ic('lip',22)+'</span><p class="muted">Tes looks enregistrés apparaîtront ici, avec le pourcentage d\'étapes que tu peux déjà réaliser.</p></div>';
+  return h+'<div class="grid">'+S.looks.slice().sort((a,b)=>String(b.created).localeCompare(String(a.created))).map(L=>{
+    const f=fidelity(L);
+    return '<button class="look" data-act="open-look" data-id="'+L.id+'"><img src="'+L.thumb+'" alt="'+esc(L.title)+'"><div class="lb"><b>'+esc(L.title)+'</b>'+
+      (f?'<div class="bar" aria-hidden="true"><i style="width:'+f.pct+'%"></i></div><span class="sub mono">'+f.ok+'/'+f.total+' étapes avec mon stock</span>':'<span class="sub">À analyser</span>')+'</div></button>';
+  }).join('')+'</div>';
+}
+
+/* --- wishlist --- */
+function viewWish(){
+  const L=S.wish.slice().sort((a,b)=>String(b.created).localeCompare(String(a.created)));
+  let h='<div class="stack"><div class="gap-s"><h2>Envies</h2><p class="sub">Ce qui manque d\'après tes routines et tes looks, et ce que tu veux essayer.</p></div>'+
+    '<div class="panel"><div class="field"><label for="wf-label">Ajouter une envie</label><input id="wf-label" type="text" placeholder="Ex. : sérum vitamine C, blush rose froid"></div>'+
+    '<div class="two"><div class="field"><label for="wf-type">Type</label><select id="wf-type"><option value="skin">Soin</option><option value="makeup">Maquillage</option></select></div><div class="field"><label for="wf-budget">Budget</label><select id="wf-budget"><option value="">Libre</option><option>€</option><option>€€</option><option>€€€</option></select></div></div>'+
+    '<div><button class="btn primary" data-act="wish-add">'+ic('plus')+' Ajouter</button></div></div>';
+  if(!L.length)return h+'<div class="empty"><span class="tile">'+ic('bag',22)+'</span><p class="muted">Rien pour l\'instant. Les produits manquants de ta routine ou de tes looks peuvent s\'ajouter ici en un tap.</p></div></div>';
+  h+='<div class="list">'+L.map(w=>'<div class="row" style="cursor:default;grid-template-columns:40px minmax(0,1fr) auto"><span class="tile '+(w.type==='makeup'?'mk':'')+'">'+ic(w.type==='makeup'?'lip':'drop')+'</span>'+
+    '<div style="min-width:0"><div class="nm">'+esc(w.label)+'</div><div class="meta"><span>'+esc(w.type==='makeup'?'Maquillage':'Soin')+(w.cat?' · '+esc(w.cat):'')+'</span>'+(w.budget?'<span class="mono">'+esc(w.budget)+'</span>':'')+'</div>'+(w.note?'<p class="sub" style="margin-top:4px">'+esc(w.note)+'</p>':'')+'</div>'+
+    '<div class="gap-s"><button class="btn primary sm" data-act="wish-bought" data-id="'+w.id+'">Acheté</button><button class="btn ghost sm" data-act="wish-del" data-id="'+w.id+'" aria-label="Retirer '+esc(w.label)+'">Retirer</button></div></div>').join('')+'</div>';
+  return h+'</div>';
+}
+
+/* ---------- sheets ---------- */
+function closeSheet(){sheet=null;$('#sheet').innerHTML='';document.body.style.overflow=''}
+function renderSheet(){
+  if(!sheet){closeSheet();return}
+  $('#sheet').innerHTML=sheet.kind==='product'?productSheet():lookSheet();
+  document.body.style.overflow='hidden';
+  const p=$('#sheet .sheet');if(p&&!sheet.focused){p.focus({preventScroll:true});sheet.focused=true}
+  if(sheet.kind==='product')updateHint();
+}
+function openProduct(id,preset){
+  const p=id?prod(id):null;
+  const d=p?clone(p):Object.assign({type:'skin',cat:'',name:'',brand:'',actives:[],shade:'',finish:'',color:'',opened:'',pao:'',expiry:'',notes:'',finished:false},preset||{});
+  const fromWish=d.fromWish||null;delete d.fromWish;
+  if(!d.cat)d.cat=catsOf(d.type)[0];
+  if(!p&&!d.pao)d.pao=PAO_DEF[d.cat]||'';
+  if(!d.pao)d.pao='';
+  sheet={kind:'product',id:p?p.id:null,draft:d,fromWish};
+  renderSheet();
+}
+function productSheet(){
+  const d=sheet.draft,mk=d.type==='makeup';
+  const cats=catsOf(d.type);
+  return '<div class="overlay"><div class="sheet'+(mk?' mk':'')+'" role="dialog" aria-modal="true" aria-label="Produit" tabindex="-1">'+
+    '<div class="sheet-h"><h3>'+(sheet.id?'Modifier le produit':'Nouveau produit')+'</h3><button class="icon-btn" data-act="close-sheet" aria-label="Fermer">'+ic('x')+'</button></div>'+
+    '<div class="seg" role="group" aria-label="Type de produit"><button aria-pressed="'+!mk+'" data-act="pf-type" data-val="skin">Soin</button><button aria-pressed="'+mk+'" data-act="pf-type" data-val="makeup">Maquillage</button></div>'+
+    field('Nom du produit','<input id="pf-name" type="text" value="'+esc(d.name)+'" placeholder="Ex. : sérum niacinamide">','pf-name')+
+    '<div class="two">'+field('Marque','<input id="pf-brand" type="text" value="'+esc(d.brand)+'">','pf-brand')+
+      field('Catégorie','<select id="pf-cat">'+cats.map(c=>'<option'+(c===d.cat?' selected':'')+'>'+esc(c)+'</option>').join('')+'</select>','pf-cat')+'</div>'+
+    (mk?'<div class="two">'+field('Teinte','<input id="pf-shade" type="text" value="'+esc(d.shade)+'" placeholder="Ex. : Beige 3N">','pf-shade')+
+        field('Finition','<select id="pf-finish">'+FINISH.map(c=>'<option value="'+esc(c)+'"'+(c===d.finish?' selected':'')+'>'+(c||'Non précisée')+'</option>').join('')+'</select>','pf-finish')+'</div>'+
+      '<div class="field"><span class="lbl">Pastille de teinte (facultatif)</span><div class="row-flex"><input id="pf-color" type="color" value="'+esc(d.color||'#d9b08c')+'" aria-label="Couleur de la teinte"><button class="btn ghost sm" data-act="pf-nocolor">Sans pastille</button><span class="sub">'+(d.color?'Pastille active':'Aucune pastille')+'</span></div></div>'
+      :field('Actifs principaux',chips('draft.actives',ACTIVES,true)))+
+    '<div class="two">'+field('Ouvert le','<input id="pf-opened" type="date" value="'+esc(d.opened)+'">','pf-opened')+
+      '<div class="field"><span class="lbl">&nbsp;</span><button class="btn ghost" data-act="pf-today" style="min-height:44px">Ouvert aujourd\'hui</button></div></div>'+
+    field('PAO, en mois (le pot ouvert sur l\'emballage)','<input id="pf-pao" type="number" inputmode="numeric" min="0" max="60" value="'+esc(d.pao)+'" placeholder="Ex. : 12"><div class="chips" style="margin-top:6px">'+[3,6,12,18,24].map(m=>'<button type="button" class="chip" data-act="pf-pao" data-val="'+m+'">'+m+'M</button>').join('')+'</div>','pf-pao')+
+    field('Date de péremption imprimée (facultatif)','<input id="pf-expiry" type="date" value="'+esc(d.expiry)+'">','pf-expiry')+
+    '<div class="note info" id="pf-hint" aria-live="polite"></div>'+
+    field('Notes','<textarea id="pf-notes" placeholder="Texture, ce qui a marché ou non, lieu d\'achat…">'+esc(d.notes)+'</textarea>','pf-notes')+
+    '<div class="row-flex"><button class="btn primary" data-act="pf-save" style="flex:1">Enregistrer</button></div>'+
+    (sheet.id?'<div class="row-flex"><button class="btn ghost" data-act="pf-finished">'+(d.finished?'Remettre en cours':'Marquer comme terminé')+'</button><button class="btn danger" data-act="pf-delete">Supprimer</button></div>':'')+
+    '</div></div>';
+}
+function syncDraft(){
+  const d=sheet.draft;
+  for(const [k,id] of [['name','pf-name'],['brand','pf-brand'],['cat','pf-cat'],['shade','pf-shade'],['finish','pf-finish'],['opened','pf-opened'],['pao','pf-pao'],['expiry','pf-expiry'],['notes','pf-notes']]){
+    const e=document.getElementById(id);if(e)d[k]=e.value;
+  }
+}
+function updateHint(){
+  const h=$('#pf-hint');if(!h)return;
+  const tmp={expiry:($('#pf-expiry')||{}).value,opened:($('#pf-opened')||{}).value,pao:Number(($('#pf-pao')||{}).value)||0};
+  const e=expiryDate(tmp);
+  if(!e){h.textContent="Renseigne la date d'ouverture et la PAO, ou la date imprimée sur l'emballage, pour suivre la péremption.";return}
+  const d=Math.round((e-startToday())/864e5);
+  h.textContent=d<0?'Périmé depuis le '+fmtDate(e)+' ('+(-d)+' jours).':'Périme le '+fmtDate(e)+' (dans '+d+' jours).';
+}
+function saveProduct(){
+  syncDraft();const d=sheet.draft;
+  const name=d.name.trim();
+  if(!name){toast('Donne un nom au produit.');return false}
+  const old=sheet.id?prod(sheet.id):null;
+  const rec={id:sheet.id||uid8(),type:d.type,cat:d.cat,name,brand:d.brand.trim(),actives:d.type==='skin'?A(d.actives):[],
+    shade:d.type==='makeup'?d.shade.trim():'',finish:d.type==='makeup'?d.finish:'',color:d.type==='makeup'?(d.color||''):'',
+    opened:d.opened||'',pao:Number(d.pao)||0,expiry:d.expiry||'',notes:d.notes.trim(),finished:!!d.finished,demo:false,created:old?old.created:todayStr()};
+  if(old)S.products[S.products.indexOf(old)]=rec;else S.products.push(rec);
+  Store.saveItem('products',rec);
+  if(sheet.fromWish){S.wish=S.wish.filter(w=>w.id!==sheet.fromWish);Store.delItem('wish',sheet.fromWish)}
+  return true;
+}
+function openLook(id){sheet={kind:'look',id};renderSheet()}
+function lookSheet(){
+  const L=S.looks.find(x=>x.id===sheet.id);if(!L)return '';
+  const r=L.result,f=fidelity(L);
+  const busy=ui.busy&&ui.busy.key==='look:'+L.id;
+  let b='';
+  if(r){
+    b+=(r.description?'<p>'+esc(r.description)+'</p>':'')+
+      '<div class="row-flex">'+(r.difficulte?'<span class="st none">'+esc(r.difficulte)+'</span>':'')+(r.duree?'<span class="st none">'+esc(r.duree)+'</span>':'')+'</div>';
+    if(f)b+='<div class="gap-s"><div class="kv"><b>Réalisable avec mon stock</b><span class="mono">'+f.pct+' %</span></div><div class="bar" aria-hidden="true"><i style="width:'+f.pct+'%"></i></div><p class="sub">'+f.ok+' étape'+(f.ok>1?'s':'')+' sur '+f.total+' avec des produits que tu as déjà.</p></div>';
+    b+='<div>'+r.etapes.map((e,i)=>{
+      const p=prod(e.produitId);
+      return '<div class="step"><span class="idx">'+(i+1)+'</span><div class="sb"><div class="st-h"><b>'+esc(e.zone)+'</b>'+(p?'<button class="pchip" data-act="open-product" data-id="'+p.id+'">'+esc(p.name)+'</button>':'<span class="miss">Produit manquant</span>')+'</div>'+
+        (e.geste?'<p class="sub">'+esc(e.geste)+'</p>':'')+
+        (!p&&e.manque?'<p class="sub"><b>À viser</b> · '+esc([e.manque.categorie,e.manque.teinte,e.manque.finition].filter(Boolean).join(' · '))+(e.manque.alternative?'<br>Avec ce que tu as : '+esc(e.manque.alternative):'')+'</p><div><button class="btn ghost sm" data-act="wish-from" data-src="look" data-look="'+L.id+'" data-i="'+i+'">'+ic('plus',16)+' Ajouter aux envies</button></div>':'')+
+        '</div></div>';
+    }).join('')+'</div>';
+    if(r.conseils.length)b+='<div>'+r.conseils.map(c=>'<p class="sub" style="margin-top:6px">'+esc(c)+'</p>').join('')+'</div>';
+  }
+  return '<div class="overlay"><div class="sheet mk" role="dialog" aria-modal="true" aria-label="Look" tabindex="-1">'+
+    '<div class="sheet-h"><h3>Look</h3><button class="icon-btn" data-act="close-sheet" aria-label="Fermer">'+ic('x')+'</button></div>'+
+    '<img src="'+L.thumb+'" alt="'+esc(L.title)+'" style="width:100%;max-width:320px;max-height:46vh;object-fit:cover;border-radius:14px;justify-self:center">'+
+    field('Nom','<input id="lk-title" type="text" data-lookfield="title" value="'+esc(L.title)+'">','lk-title')+
+    field('Note','<input id="lk-note" type="text" data-lookfield="note" value="'+esc(L.note||'')+'" placeholder="Occasion, ce que j\'aime dans ce look…">','lk-note')+
+    busyBlock('look:'+L.id,'Claude analyse le look…')+
+    '<div><button class="btn primary" data-act="look-analyze" data-id="'+L.id+'"'+(ui.busy||!AI.sample?' disabled':'')+'>'+ic('spark')+' '+(r?'Relancer l\'analyse':'Analyser avec mon stock')+'</button></div>'+
+    b+
+    '<div class="row-flex"><button class="btn danger" data-act="look-delete" data-id="'+L.id+'">Supprimer ce look</button></div></div></div>';
+}
+
+/* ---------- actions ---------- */
+const ACT={
+  tab:t=>go(t.dataset.val),
+  when:t=>{ui.when=t.dataset.val;render()},
+  'goto-routine':()=>{ui.skinTab='routine';go('skin')},
+  'skin-tab':t=>{ui.skinTab=t.dataset.val;if(ui.tab!=='skin')ui.tab='skin';render();window.scrollTo(0,0)},
+  'mk-tab':t=>{ui.mkTab=t.dataset.val;render()},
+  ftype:t=>{ui.filter.type=t.dataset.val;render()},
+  flag:t=>{ui.filter.flag=ui.filter.flag===t.dataset.val?'':t.dataset.val;render()},
+  'open-product':t=>{openProduct(t.dataset.id||null)},
+  'close-sheet':closeSheet,
+  'load-demo':()=>{const L=sampleProducts();L.forEach(p=>{S.products.push(p);Store.saveItem('products',p)});render();toast('Exemples ajoutés')},
+  'clear-demo':()=>{S.products.filter(p=>p.demo).forEach(p=>Store.delItem('products',p.id));S.products=S.products.filter(p=>!p.demo);render();toast('Exemples supprimés')},
+  done:t=>{
+    const id=t.dataset.id;
+    if(S.done.date!==todayStr())S.done={date:todayStr(),ids:[]};
+    const i=S.done.ids.indexOf(id);if(i>=0)S.done.ids.splice(i,1);else S.done.ids.push(id);
+    Store.saveMain();render();
+  },
+  'pf-type':t=>{
+    syncDraft();const d=sheet.draft,nt=t.dataset.val;
+    if(d.type!==nt){d.type=nt;d.cat=catsOf(nt)[0];d.pao=PAO_DEF[d.cat]||''}
+    renderSheet();
+  },
+  'pf-today':()=>{const e=$('#pf-opened');e.value=todayStr();updateHint()},
+  'pf-pao':t=>{$('#pf-pao').value=t.dataset.val;updateHint()},
+  'pf-nocolor':()=>{syncDraft();sheet.draft.color='';renderSheet()},
+  'pf-save':()=>{const isNew=!sheet.id;if(saveProduct()){closeSheet();render();toast(isNew?'Produit ajouté':'Produit mis à jour')}},
+  'pf-finished':()=>{syncDraft();const fin=!sheet.draft.finished;sheet.draft.finished=fin;if(saveProduct()){closeSheet();render();toast(fin?'Produit marqué comme terminé':'Produit remis en cours')}},
+  'pf-delete':t=>{
+    if(t.dataset.arm!=='1'){t.dataset.arm='1';t.textContent='Confirmer la suppression';return}
+    const id=sheet.id;S.products=S.products.filter(p=>p.id!==id);Store.delItem('products',id);closeSheet();render();toast('Produit supprimé');
+  },
+  'wish-add':()=>{
+    const l=$('#wf-label').value.trim();if(!l){toast('Écris ce que tu cherches.');return}
+    addWish({label:l,type:$('#wf-type').value,budget:$('#wf-budget').value});
+  },
+  'wish-del':t=>{const id=t.dataset.id;S.wish=S.wish.filter(w=>w.id!==id);Store.delItem('wish',id);render()},
+  'wish-bought':t=>{const w=S.wish.find(x=>x.id===t.dataset.id);if(!w)return;openProduct(null,{name:w.label,type:w.type,cat:w.cat||undefined,fromWish:w.id})},
+  'wish-from':t=>{
+    const src=t.dataset.src,i=Number(t.dataset.i);
+    if(src==='routine'&&S.routine&&S.routine.manques[i])missToWish(S.routine.manques[i],'skin','routine');
+    else if(src==='mk'&&S.mkPlan&&S.mkPlan.manques[i])missToWish(S.mkPlan.manques[i],'makeup','maquillage');
+    else if(src==='look'){
+      const L=S.looks.find(x=>x.id===t.dataset.look);const e=L&&L.result&&L.result.etapes[i];
+      if(e&&e.manque){
+        const m=e.manque;
+        addWish({label:m.categorie||e.zone,type:'makeup',note:[m.teinte,m.finition,m.alternative?'Alternative : '+m.alternative:''].filter(Boolean).join(' · '),from:'look'});
+        renderSheet();
+      }
+    }
+  },
+  'pick-photo':(t,e)=>{if(e.target.tagName==='INPUT'||e.target.closest('.rm'))return;const i=$('#ph-'+t.dataset.k);if(i)i.click()},
+  'rm-photo':(t,e)=>{e.stopPropagation();const p=photos[t.dataset.k];if(p){URL.revokeObjectURL(p.url);delete photos[t.dataset.k]}render()},
+  'skin-analyze':()=>analyzeSkin(),
+  'routine-build':()=>buildRoutine(),
+  'mk-build':()=>buildMkPlan(),
+  'ai-stop':()=>{if(ctl)ctl.abort()},
+  'look-new':()=>{const i=$('#lk-file');if(i)i.click()},
+  'open-look':t=>openLook(t.dataset.id),
+  'look-analyze':t=>analyzeLook(t.dataset.id),
+  'look-delete':t=>{
+    if(t.dataset.arm!=='1'){t.dataset.arm='1';t.textContent='Confirmer la suppression';return}
+    const id=t.dataset.id;S.looks=S.looks.filter(l=>l.id!==id);delete lookBlobs[id];Store.delItem('looks',id);closeSheet();render();toast('Look supprimé');
+  }
+};
+function chipClick(b){
+  const path=b.dataset.chip;const arr=A(getPath(path)).slice();const v=b.dataset.val;
+  const i=arr.indexOf(v);if(i>=0)arr.splice(i,1);else arr.push(v);
+  setPath(path,arr);b.setAttribute('aria-pressed',String(i<0));
+}
+function singleClick(b){
+  const path=b.dataset.single,v=b.dataset.val;
+  const nv=getPath(path)===v?'':v;setPath(path,nv);
+  document.querySelectorAll('[data-single="'+path+'"]').forEach(x=>x.setAttribute('aria-pressed',String(nv!==''&&x.dataset.val===nv)));
+}
+document.addEventListener('click',e=>{
+  if(e.target.classList&&e.target.classList.contains('overlay')){closeSheet();return}
+  const a=e.target.closest('[data-act]');
+  if(a){const f=ACT[a.dataset.act];if(f)f(a,e);return}
+  const c=e.target.closest('[data-chip]');if(c){chipClick(c);return}
+  const s=e.target.closest('[data-single]');if(s){singleClick(s);return}
+});
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'&&sheet)closeSheet();
+  if((e.key==='Enter'||e.key===' ')&&e.target.matches&&e.target.matches('.slot')){e.preventDefault();e.target.click()}
+});
+document.addEventListener('input',e=>{
+  const t=e.target;
+  if(t.dataset&&t.dataset.bind){setPath(t.dataset.bind,t.value);return}
+  if(t.id==='q'){ui.filter.q=t.value;renderList();return}
+  if(t.id==='pf-opened'||t.id==='pf-pao'||t.id==='pf-expiry')updateHint();
+  if(t.id==='pf-color'&&sheet)sheet.draft.color=t.value;
+});
+document.addEventListener('change',async e=>{
+  const t=e.target;
+  if(t.id==='sort'){ui.filter.sort=t.value;renderList();return}
+  if(t.id==='pf-cat'&&sheet){const el=$('#pf-pao');if(el&&!el.value){el.value=PAO_DEF[t.value]||'';updateHint()}return}
+  if(t.dataset&&t.dataset.lookfield&&sheet){
+    const L=S.looks.find(x=>x.id===sheet.id);if(L){L[t.dataset.lookfield]=t.value;Store.saveItem('looks',L);render()}return;
+  }
+  if(t.dataset&&t.dataset.slot&&t.files&&t.files[0]){
+    const k=t.dataset.slot;
+    try{
+      const blob=await toJpeg(t.files[0],1024,.85);
+      if(photos[k])URL.revokeObjectURL(photos[k].url);
+      photos[k]={blob,url:URL.createObjectURL(blob)};render();
+    }catch{toast("Cette image n'a pas pu être lue.")}
+    return;
+  }
+  if(t.id==='lk-file'&&t.files&&t.files[0]){
+    try{
+      const f=t.files[0];
+      const blob=await toJpeg(f,1024,.85);
+      const thumb=await blobToDataUrl(await toJpeg(f,360,.7));
+      const L={id:uid8(),title:'Nouveau look',note:'',thumb,created:todayStr(),result:null};
+      S.looks.push(L);lookBlobs[L.id]=blob;Store.saveItem('looks',L);render();openLook(L.id);
+    }catch{toast("Cette image n'a pas pu être lue.")}
+  }
+});
+
+/* ---------- boot ---------- */
+if('storage' in navigator&&navigator.storage.persist){navigator.storage.persist().catch(()=>{})}
+render();
+(async()=>{
+  await Store.init();
+  AI.sample=await cap('sample');
+  if(AI.sample){try{const l=await AI.sample.limits();AI.images=l&&l.images?l.images:null}catch{AI.images=null}}
+  ready=true;render();
+})();
+})();
+</script>
+
+<script>
+if('serviceWorker' in navigator){
+  const had=!!navigator.serviceWorker.controller;let reloading=false;
+  navigator.serviceWorker.addEventListener('controllerchange',()=>{if(!had||reloading)return;reloading=true;location.reload()});
+  window.addEventListener('load',()=>{
+    navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).then(r=>{
+      const check=()=>r.update().catch(()=>{});
+      document.addEventListener('visibilitychange',()=>{if(!document.hidden)check()});
+      setInterval(check,60*60*1000);
+    }).catch(()=>{});
+  });
+}
+</script>
+</body></html>
