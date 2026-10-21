@@ -35,7 +35,7 @@
   color-scheme:dark;
 }
 *{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%;touch-action:manipulation}
+html{-webkit-text-size-adjust:100%}
 body{
   background:var(--bg);color:var(--ink);font:400 15px/1.5 var(--f-body);
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
@@ -266,6 +266,19 @@ body{padding-bottom:calc(112px + env(safe-area-inset-bottom,0px))}
 .bar i{border-radius:99px}
 .note{border-radius:18px}
 @supports not (backdrop-filter:blur(1px)){.panel,.list,.need,.look,.tabs,.sheet{background:color-mix(in srgb,var(--bg) 90%,#fff)}}
+
+/* verrouillage : pas de glissement horizontal, scroll vertical uniquement */
+html,body{max-width:100%;overflow-x:hidden;overscroll-behavior-x:none;touch-action:pan-y}
+body{width:100%;position:relative}
+.wrap,.panel,.list,.field,.row,.two>*{min-width:0;max-width:100%}
+.two{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+input,select,textarea,button{max-width:100%}
+input[type=date],input[type=number],input[type=text],select,textarea{min-width:0;width:100%;-webkit-appearance:none;appearance:none}
+input[type=date]{display:block;min-height:44px;text-align:left}
+.sheet{overflow-x:hidden;overscroll-behavior:contain;touch-action:pan-y;max-width:100%}
+.sheet>*{min-width:0;max-width:100%}
+.overlay{touch-action:pan-y;overflow:hidden}
+.chips{max-width:100%}
 </style>
 
 <div class="wrap">
