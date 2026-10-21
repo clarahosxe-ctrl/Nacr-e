@@ -1,7 +1,7 @@
 // Réseau d'abord : chaque mise à jour publiée est récupérée automatiquement,
 // le cache ne sert que hors connexion.
-const CACHE = 'beauty-corner-v5';
-const SHELL = ['./', 'index.html', 'manifest.webmanifest', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/apple-touch-icon.png', 'icons/logo-source.png'];
+const CACHE = 'beauty-corner-v6';
+const SHELL = ['./', 'index.html', 'manifest.webmanifest', 'icons/icon-192.png?v=2', 'icons/icon-512.png?v=2', 'icons/apple-touch-icon.png?v=2', 'icons/logo-source.png'];
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL.map(u => new Request(u, {cache: 'reload'})))).then(() => self.skipWaiting()));
