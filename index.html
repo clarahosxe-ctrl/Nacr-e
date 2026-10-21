@@ -1,4 +1,4 @@
-<!doctype html><html><head><meta charset=utf-8><meta name="theme-color" content="#F2F2F3" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#121214" media="(prefers-color-scheme: dark)"><meta name="description" content="Ton placard beauté, ta routine et tes looks."><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icons/icon-192.png?v=4"><link rel="apple-touch-icon" href="icons/apple-touch-icon.png?v=4"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Nācreā"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html><html><head><meta charset=utf-8><meta name="theme-color" content="#F2F2F3" media="(prefers-color-scheme: light)"><meta name="theme-color" content="#121214" media="(prefers-color-scheme: dark)"><meta name="description" content="Ton placard beauté, ta routine et tes looks."><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icons/icon-192.png?v=4"><link rel="apple-touch-icon" href="icons/apple-touch-icon.png?v=4"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Nācreā"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>Nācreā</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;700&display=swap">
@@ -35,7 +35,7 @@
   color-scheme:dark;
 }
 *{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%}
+html{-webkit-text-size-adjust:100%;touch-action:manipulation}
 body{
   background:var(--bg);color:var(--ink);font:400 15px/1.5 var(--f-body);
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
@@ -274,7 +274,7 @@ body{padding-bottom:calc(112px + env(safe-area-inset-bottom,0px))}
       <span class="logo" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="8"/><path d="M8 9.5a4.5 4.5 0 013-2.2"/></svg></span>
       <h1>Nācreā</h1>
     </div>
-    <span id="store" class="store" aria-live="polite">Chargement</span>
+    <div class="row-flex" style="flex-wrap:nowrap;gap:8px"><span id="store" class="store" aria-live="polite">Chargement</span><button class="icon-btn" data-act="open-settings" aria-label="Réglages"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></svg></button></div>
   </header>
   <main id="view"></main>
 </div>
@@ -310,6 +310,8 @@ const FINISH=["","Mat","Satiné","Lumineux","Crémeux","Irisé"];
 const SLOTS=[{k:"face",label:"Face"},{k:"gauche",label:"Profil gauche"},{k:"droite",label:"Profil droit"},{k:"zoomA",label:"Front et joues"},{k:"zoomB",label:"Zone à problème"}];
 
 const IC={
+  gear:'<path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/>',
+  scan:'<path d="M4 8V5a1 1 0 011-1h3M16 4h3a1 1 0 011 1v3M20 16v3a1 1 0 01-1 1h-3M8 20H5a1 1 0 01-1-1v-3"/><path d="M8 12h8"/>',
   sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
   jar:'<rect x="5" y="9" width="14" height="11" rx="3"/><path d="M6.5 9V6.5a1 1 0 011-1h9a1 1 0 011 1V9M5 14h14"/>',
   drop:'<path d="M12 3s6 6.2 6 10.5A6 6 0 016 13.5C6 9.2 12 3 12 3z"/>',
@@ -464,6 +466,9 @@ const field=(label,inner,id)=>'<div class="field"><label'+(id?' for="'+id+'"':''
 const busyBlock=(key,label)=>ui.busy&&ui.busy.key===key?'<div class="busy" role="status"><span class="spin"></span><div style="flex:1">'+esc(label)+'<div class="sub">Cela peut prendre une minute.</div></div><button class="btn ghost sm" data-act="ai-stop">Arrêter</button></div>':'';
 function errCopy(e){
   const c=e&&e.code;
+  if(c==='auth')return "Clé Claude refusée. Vérifie-la dans les réglages.";
+  if(c==='network')return "Pas de connexion. Réessaie quand tu es en ligne.";
+  if(c==='nokey')return "Ajoute ta clé Claude dans les réglages pour utiliser l'analyse.";
   if(c==='not_granted'||c==='sampling_disabled'||c==='not_declared')return "L'analyse n'est pas autorisée pour cette page.";
   if(c==='rate_limited')return "Trop de demandes ou limite d'usage atteinte. Réessaie un peu plus tard.";
   if(c==='image_rejected')return "Une photo n'a pas pu être lue. Essaie une autre image.";
@@ -480,6 +485,93 @@ async function aiCall(key,exec){
   finally{ui.busy=null;ctl=null;render();if(sheet&&sheet.kind==='look')renderSheet()}
 }
 const JSON_RULE="Réponds uniquement avec un objet JSON valide, sans texte autour, en français.";
+
+/* ---------- own Claude key (standalone app) ---------- */
+const KEYSTORE='nacrea:apikey',MODEL='claude-sonnet-5-5';
+const getKey=()=>{try{return localStorage.getItem(KEYSTORE)||''}catch{return ''}};
+function keySample(){
+  return {
+    async limits(){return {images:{maxCount:5}}},
+    async json(prompt,o={}){
+      const imgs=o.images?(Array.isArray(o.images)?o.images:[o.images]):[];
+      const content=[];
+      for(const b of imgs){const u=await blobToDataUrl(b);content.push({type:'image',source:{type:'base64',media_type:'image/jpeg',data:u.split(',')[1]}})}
+      content.push({type:'text',text:prompt});
+      let res;
+      try{
+        res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',signal:o.signal,
+          headers:{'content-type':'application/json','x-api-key':getKey(),'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+          body:JSON.stringify({model:MODEL,max_tokens:4096,messages:[{role:'user',content}]})});
+      }catch(e){if(e&&e.name==='AbortError')throw {code:'cancelled'};throw {code:'network'}}
+      if(!res.ok)throw {code:res.status===401||res.status===403?'auth':res.status===429?'rate_limited':'api'};
+      const j=await res.json();
+      const txt=A(j.content).map(c=>c.text||'').join('');
+      const m=txt.match(/\{[\s\S]*\}/);if(!m)throw {code:'invalid_json'};
+      try{return JSON.parse(m[0])}catch{throw {code:'invalid_json'}}
+    }
+  };
+}
+async function setupAI(){
+  AI.sample=await cap('sample');AI.own=false;
+  if(!AI.sample&&getKey()){AI.sample=keySample();AI.own=true}
+  AI.images=null;
+  if(AI.sample){try{const l=await AI.sample.limits();AI.images=l&&l.images?l.images:null}catch{AI.images=null}}
+}
+
+/* ---------- scan products from a photo (photo never stored) ---------- */
+async function scanPhoto(file){
+  const ac=new AbortController();
+  sheet={kind:'scan',state:'busy',items:[],ctl:ac};renderSheet();
+  try{
+    let blob=await toJpeg(file,1600,.85);
+    const prompt=[
+      "Tu aides à inventorier un placard beauté. Sur la photo, repère chaque produit de soin ou de maquillage visible (il peut y en avoir un seul ou plusieurs) et lis son emballage.",
+      "Pour chaque produit : nom, marque, type (\"skin\" pour le soin, \"makeup\" pour le maquillage), catégorie, teinte et finition pour le maquillage, PAO en mois si le pictogramme du pot ouvert est lisible, date de péremption imprimée au format AAAA-MM-JJ si lisible.",
+      "Catégories soin : "+SKIN_CATS.join(', ')+". Catégories maquillage : "+MK_CATS.join(', ')+". Finitions : "+FINISH.filter(Boolean).join(', ')+".",
+      "N'invente rien : laisse vide ce qui n'est pas lisible. Ne liste pas deux fois le même produit. Ignore ce qui n'est pas un produit de beauté.",
+      JSON_RULE+' Format : {"produits":[{"nom":"...","marque":"...","type":"skin|makeup","categorie":"...","teinte":"","finition":"","pao":null,"peremption":"","confiance":"haute|moyenne|faible"}]}'
+    ].join('\n\n');
+    const r=await AI.sample.json(prompt,{signal:ac.signal,cache:false,images:blob});
+    blob=null;
+    if(!sheet||sheet.kind!=='scan')return;
+    sheet.items=A(r&&r.produits).map(x=>{
+      const type=x.type==='makeup'?'makeup':'skin',cats=catsOf(type);
+      const cat=cats.find(c=>norm(c)===norm(x.categorie))||cats[cats.length-1];
+      const fin=FINISH.find(f=>f&&norm(f)===norm(x.finition))||'';
+      const pao=Number(x.pao)>0&&Number(x.pao)<=60?Number(x.pao):(PAO_DEF[cat]||'');
+      const exp=/^\d{4}-\d{2}-\d{2}$/.test(T(x.peremption))?x.peremption:'';
+      return {on:true,nom:T(x.nom).trim(),marque:T(x.marque).trim(),type,cat,shade:type==='makeup'?T(x.teinte).trim():'',finish:type==='makeup'?fin:'',pao,expiry:exp,conf:T(x.confiance)};
+    }).filter(x=>x.nom);
+    sheet.state='done';renderSheet();
+  }catch(e){
+    if(e&&e.code==='cancelled')return;
+    if(sheet&&sheet.kind==='scan'){closeSheet();toast(e&&e.code?errCopy(e):"Cette image n'a pas pu être lue.")}
+  }
+}
+function scanSheet(){
+  const it=sheet.items;let b='';
+  if(sheet.state==='busy')b='<div class="busy" role="status"><span class="spin"></span><div style="flex:1">Claude lit ta photo…<div class="sub">La photo n\'est pas conservée.</div></div></div>';
+  else if(!it.length)b='<div class="note info">Aucun produit repéré. Essaie une photo plus nette, de face et bien éclairée, avec les étiquettes visibles.</div><div><button class="btn primary" data-act="scan-new">'+ic('cam')+' Reprendre une photo</button></div>';
+  else b='<p class="sub">'+it.length+' produit'+(it.length>1?'s':'')+' repéré'+(it.length>1?'s':'')+'. Décoche ceux que tu ne veux pas ajouter et corrige les noms si besoin. Tu pourras ajouter les dates d\'ouverture ensuite.</p>'+
+    '<div class="list">'+it.map((x,i)=>'<div class="row" style="cursor:default;grid-template-columns:auto minmax(0,1fr)"><input type="checkbox" data-scanon="'+i+'"'+(x.on?' checked':'')+' aria-label="Ajouter" style="width:22px;height:22px">'+
+      '<div style="min-width:0;display:grid;gap:6px"><input type="text" data-scan="'+i+'" value="'+esc(x.nom)+'" aria-label="Nom du produit"><div class="meta">'+
+      '<span>'+esc(x.marque||'Marque inconnue')+'</span><span>'+esc(x.cat)+(x.shade?' · '+esc(x.shade):'')+'</span>'+(x.pao?'<span class="mono">'+x.pao+'M</span>':'')+(x.conf==='faible'?'<span class="st soon">à vérifier</span>':'')+'</div></div></div>').join('')+'</div>'+
+    '<div class="row-flex"><button class="btn primary" data-act="scan-save" style="flex:1">Ajouter '+it.filter(x=>x.on).length+' produit'+(it.filter(x=>x.on).length>1?'s':'')+'</button></div>';
+  return '<div class="overlay"><div class="sheet" role="dialog" aria-modal="true" aria-label="Ajouter avec une photo" tabindex="-1">'+
+    '<div class="sheet-h"><h3>Ajouter avec une photo</h3><button class="icon-btn" data-act="close-sheet" aria-label="Fermer">'+ic('x')+'</button></div>'+b+'</div></div>';
+}
+function settingsSheet(){
+  const has=!!getKey(),native=AI.sample&&!AI.own;
+  return '<div class="overlay"><div class="sheet" role="dialog" aria-modal="true" aria-label="Réglages" tabindex="-1">'+
+    '<div class="sheet-h"><h3>Réglages</h3><button class="icon-btn" data-act="close-sheet" aria-label="Fermer">'+ic('x')+'</button></div>'+
+    '<div class="panel"><h3>Analyse par Claude</h3>'+
+    (native?'<p class="sub">Déjà disponible dans cet environnement, aucune clé nécessaire.</p>':
+    '<p class="sub">Le scan par photo, l\'analyse de peau, la routine et les looks utilisent Claude. Colle ta clé API personnelle : elle reste sur ce téléphone et n\'est envoyée qu\'à Anthropic. Les photos sont envoyées pour analyse puis oubliées, jamais enregistrées dans l\'app. L\'usage est facturé sur ton compte Anthropic.</p>'+
+    field('Clé API Anthropic','<input id="set-key" type="password" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="sk-ant-…" value="'+(has?'••••••••••••':'')+'">','set-key')+
+    '<div class="row-flex"><button class="btn primary" data-act="key-save">Enregistrer</button>'+(has?'<button class="btn danger" data-act="key-del">Supprimer la clé</button>':'')+'</div>'+
+    '<p class="sub">Tu peux créer une clé sur console.anthropic.com.</p>')+
+    '</div></div></div>';
+}
 
 /* ---------- images ---------- */
 async function loadBitmap(file){
@@ -718,7 +810,7 @@ function viewCabinet(){
   const seg=[['all','Tout'],['skin','Soin'],['makeup','Maquillage']].map(([k,l])=>'<button aria-pressed="'+(f.type===k)+'" data-act="ftype" data-val="'+k+'">'+l+'</button>').join('');
   const flags=[['soon','À finir vite'],['bad','Expirés'],['done','Terminés']].map(([k,l])=>'<button class="chip" aria-pressed="'+(f.flag===k)+'" data-act="flag" data-val="'+k+'">'+l+'</button>').join('');
   const hasDemo=S.products.some(p=>p.demo);
-  return '<div class="stack"><div class="kv"><div class="gap-s"><h2>Placard</h2><p class="sub mono">'+act.length+' en cours · '+nSoon+' à finir vite · '+nBad+' expiré'+(nBad>1?'s':'')+'</p></div><button class="btn primary" data-act="open-product" data-id="">'+ic('plus')+' Ajouter</button></div>'+
+  return '<div class="stack"><div class="kv" style="flex-wrap:wrap"><div class="gap-s"><h2>Placard</h2><p class="sub mono">'+act.length+' en cours · '+nSoon+' à finir vite · '+nBad+' expiré'+(nBad>1?'s':'')+'</p></div><div class="row-flex" style="flex-wrap:nowrap"><button class="btn ghost" data-act="scan-new" aria-label="Ajouter avec une photo">'+ic('cam')+' Photo</button><button class="btn primary" data-act="open-product" data-id="">'+ic('plus')+' Ajouter</button></div></div>'+'<input id="scan-file" type="file" accept="image/*" hidden>'+
     (hasDemo?'<div class="note info">Les produits marqués « exemple » servent à tester l\'application. <button class="btn ghost sm" data-act="clear-demo" style="margin-left:6px">Supprimer les exemples</button></div>':'')+
     '<div class="seg" role="group" aria-label="Type">'+seg+'</div>'+
     '<div class="field"><label for="q">Chercher</label><input id="q" type="text" placeholder="Nom, marque, catégorie, actif…" value="'+esc(f.q)+'"></div>'+
@@ -772,7 +864,7 @@ function skinPhotos(){
   const a=S.analysis;
   const imgsOk=!!AI.images;
   let h='';
-  if(!AI.sample)h+='<div class="note">L\'analyse par Claude n\'est pas disponible dans cette vue. Le placard et ton profil restent utilisables.</div>';
+  if(!AI.sample)h+='<div class="note">L\'analyse par Claude n\'est pas activée. Ajoute ta clé dans les réglages (roue dentée en haut). Le placard et ton profil restent utilisables.</div>';
   h+='<div class="panel"><h3>Photos de ma peau</h3>';
   if(imgsOk){
     h+='<p class="sub">Peau nue, en lumière du jour, sans filtre. Une photo de face, deux de profil, puis des zooms. Les photos servent à l\'analyse et ne sont pas enregistrées.</p>'+
@@ -783,7 +875,7 @@ function skinPhotos(){
           '<input id="ph-'+s.k+'" data-slot="'+s.k+'" type="file" accept="image/*" hidden></div>';
       }).join('')+'</div>';
   }else{
-    h+='<p class="sub">L\'envoi de photos n\'est pas disponible dans cette vue : l\'analyse se fera d\'après ton profil.</p>';
+    h+='<p class="sub">L\'envoi de photos nécessite la clé Claude (réglages) : sinon l\'analyse se fera d\'après ton profil.</p>';
   }
   h+=busyBlock('skin','Claude examine ta peau…');
   h+='<div><button class="btn primary" data-act="skin-analyze"'+(ui.busy||!AI.sample?' disabled':'')+'>'+ic('spark')+' '+(a?'Relancer l\'analyse':'Analyser ma peau')+'</button></div></div>';
@@ -840,7 +932,7 @@ function mkProfile(){
     busyBlock('mk','Claude passe ton maquillage en revue…')+
     '<div><button class="btn primary" data-act="mk-build"'+(ui.busy||!AI.sample?' disabled':'')+'>'+ic('spark')+' '+(P?'Refaire les conseils':'Voir ce que je peux faire avec mon stock')+'</button></div>'+
     '<p class="sub">'+n+' produit'+(n>1?'s':'')+' de maquillage en cours dans ton placard.</p></div>';
-  if(!AI.sample)h='<div class="note">Les conseils par Claude ne sont pas disponibles dans cette vue.</div>'+h;
+  if(!AI.sample)h='<div class="note">Les conseils par Claude ne sont pas activés. Ajoute ta clé dans les réglages (roue dentée en haut).</div>'+h;
   if(!P)return h;
   h+=verdictNote(P.verdict,P.verdictTexte);
   if(P.routine.length)h+='<section class="panel"><h3>Ma routine maquillage</h3><div>'+stepsHTML(P.routine,'mk','read')+'</div></section>';
@@ -878,10 +970,10 @@ function viewWish(){
 }
 
 /* ---------- sheets ---------- */
-function closeSheet(){sheet=null;$('#sheet').innerHTML='';document.body.style.overflow=''}
+function closeSheet(){if(sheet&&sheet.ctl)sheet.ctl.abort();sheet=null;$('#sheet').innerHTML='';document.body.style.overflow=''}
 function renderSheet(){
   if(!sheet){closeSheet();return}
-  $('#sheet').innerHTML=sheet.kind==='product'?productSheet():lookSheet();
+  $('#sheet').innerHTML=sheet.kind==='product'?productSheet():sheet.kind==='scan'?scanSheet():sheet.kind==='settings'?settingsSheet():lookSheet();
   document.body.style.overflow='hidden';
   const p=$('#sheet .sheet');if(p&&!sheet.focused){p.focus({preventScroll:true});sheet.focused=true}
   if(sheet.kind==='product')updateHint();
@@ -978,6 +1070,22 @@ function lookSheet(){
 
 /* ---------- actions ---------- */
 const ACT={
+  'scan-new':()=>{if(!AI.sample||!AI.images){sheet={kind:'settings'};renderSheet();toast("Ajoute ta clé Claude pour scanner une photo.");return}const i=$('#scan-file');if(i)i.click()},
+  'open-settings':()=>{sheet={kind:'settings'};renderSheet()},
+  'key-save':async()=>{
+    const v=($('#set-key')||{}).value||'';if(v.startsWith('•'))return closeSheet();
+    const k=v.trim();if(!/^sk-ant-/.test(k)){toast('Cette clé ne semble pas valide.');return}
+    try{localStorage.setItem(KEYSTORE,k)}catch{toast("Impossible d'enregistrer la clé.");return}
+    await setupAI();closeSheet();render();toast('Clé enregistrée');
+  },
+  'key-del':async()=>{try{localStorage.removeItem(KEYSTORE)}catch{}await setupAI();closeSheet();render();toast('Clé supprimée')},
+  'scan-save':()=>{
+    if(!sheet||sheet.kind!=='scan')return;
+    const on=sheet.items.filter(x=>x.on&&x.nom.trim());
+    if(!on.length){toast('Aucun produit sélectionné.');return}
+    on.forEach(x=>{const rec={id:uid8(),type:x.type,cat:x.cat,name:x.nom.trim(),brand:x.marque,actives:[],shade:x.shade,finish:x.finish,color:'',opened:'',pao:Number(x.pao)||0,expiry:x.expiry,notes:'',finished:false,demo:false,created:todayStr()};S.products.push(rec);Store.saveItem('products',rec)});
+    closeSheet();render();toast(on.length+' produit'+(on.length>1?'s ajoutés':' ajouté'));
+  },
   tab:t=>go(t.dataset.val),
   when:t=>{ui.when=t.dataset.val;render()},
   'goto-routine':()=>{ui.skinTab='routine';go('skin')},
@@ -1065,6 +1173,7 @@ document.addEventListener('keydown',e=>{
 });
 document.addEventListener('input',e=>{
   const t=e.target;
+  if(t.dataset&&t.dataset.scan!==undefined&&sheet&&sheet.kind==='scan'){sheet.items[+t.dataset.scan].nom=t.value;return}
   if(t.dataset&&t.dataset.bind){setPath(t.dataset.bind,t.value);return}
   if(t.id==='q'){ui.filter.q=t.value;renderList();return}
   if(t.id==='pf-opened'||t.id==='pf-pao'||t.id==='pf-expiry')updateHint();
@@ -1072,6 +1181,8 @@ document.addEventListener('input',e=>{
 });
 document.addEventListener('change',async e=>{
   const t=e.target;
+  if(t.id==='scan-file'){const f=t.files&&t.files[0];t.value='';if(f)scanPhoto(f);return}
+  if(t.dataset&&t.dataset.scanon!==undefined&&sheet&&sheet.kind==='scan'){sheet.items[+t.dataset.scanon].on=t.checked;renderSheet();return}
   if(t.id==='sort'){ui.filter.sort=t.value;renderList();return}
   if(t.id==='pf-cat'&&sheet){const el=$('#pf-pao');if(el&&!el.value){el.value=PAO_DEF[t.value]||'';updateHint()}return}
   if(t.dataset&&t.dataset.lookfield&&sheet){
@@ -1102,8 +1213,7 @@ if('storage' in navigator&&navigator.storage.persist){navigator.storage.persist(
 render();
 (async()=>{
   await Store.init();
-  AI.sample=await cap('sample');
-  if(AI.sample){try{const l=await AI.sample.limits();AI.images=l&&l.images?l.images:null}catch{AI.images=null}}
+  await setupAI();
   ready=true;render();
 })();
 })();
