@@ -1,6 +1,6 @@
 // Réseau d'abord : chaque mise à jour publiée est récupérée automatiquement,
 // le cache ne sert que hors connexion.
-const CACHE = 'beauty-corner-v6';
+const CACHE = 'beauty-corner-v7';
 const SHELL = ['./', 'index.html', 'manifest.webmanifest', 'icons/icon-192.png?v=2', 'icons/icon-512.png?v=2', 'icons/apple-touch-icon.png?v=2', 'icons/logo-source.png'];
 
 self.addEventListener('install', e => {
